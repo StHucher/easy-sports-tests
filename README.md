@@ -1,3 +1,3 @@
 # projet-20-easy-sports-tests
 ## Bienvenue dans le repository du projet Easy-Sports-Test
-### Maxime Stéphane et Olivier 
+### Maxime Stéphane, Olivier 
