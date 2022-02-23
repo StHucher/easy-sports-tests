@@ -1,0 +1,42 @@
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+body {
+    min-height: 100vh;
+    
+} 
+
+
+
+/* fait passer la navbar au dessus du texte */
+.navbar {
+    z-index: 9999;
+}
+
+/* Image page d'accueil*/
+.bg-image{
+    background-size: cover;
+    min-height: 100vh;
+}  
+
+/* div de présentation sur la home */
+.bg-opacity {
+    background: rgb(0, 0, 0); 
+    background: rgba(0, 0, 0, 0.3); 
+    color: #f1f1f1; /* Grey text */
+    width: 80%; /* Full width */
+    padding: 20px; /* Some padding */
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    /*  */transform: translate(-50%, -50%);   
+}
+
+
+
+
