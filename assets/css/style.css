@@ -7,7 +7,6 @@
 */
 body {
     min-height: 100vh;
-    
 } 
 
 
@@ -37,5 +36,13 @@ body {
     /*  */transform: translate(-50%, -50%);   
 }
 
+.resultblock:hover{
+    transform:scale(1.05);   
+}
+
+.resultblock {
+    transition: all 0.2s ease;
+    cursor: pointer
+}
 
 
