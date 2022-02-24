@@ -57,6 +57,12 @@ body {
     transform:scale(1.05);    
 }
 
+/*shadow effect on all the cards and the picture*/
+.allcard{
+    /* background-color: rgb(99, 99, 100); */
+    box-shadow: 8px 8px 5px rgb(80, 80, 80);
+}
+
 
 
 
