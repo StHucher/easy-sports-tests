@@ -24,12 +24,10 @@ body {
     margin-bottom: 2rem;
   }
   
-  .title-page{
+.title-page{
     margin-top: 3rem;
     font-family: 'Graduate', cursive;
-  }
-
-
+}
 
 /* fait passer la navbar au dessus du texte */
 .navbar {
@@ -67,11 +65,61 @@ body {
     transform:scale(1.05);    
 }
 
-/*shadow effect on all the cards and the picture*/
-.allcard{
-    /* background-color: rgb(99, 99, 100); */
+.card {
+    border: none;
+    border-radius: 10px;
     box-shadow: 8px 8px 5px rgb(80, 80, 80);
 }
+
+.row{
+    justify-content: center;
+}
+
+.btn-1 {
+    background: #3f9e55;
+    color: #000000;
+    cursor: pointer;
+    font-size: 1.5em;
+    padding: 1.5rem;
+    border: 0;
+    transition: all 0.5s;
+    border-radius: 10px;
+    width: 18rem;
+    height: fit-content;
+    margin-left:3rem;
+    margin-right:3rem;
+    position: relative;
+}
+    
+.btn-1::after {
+        content: "\f1df";
+        font-family: "Material Icons";
+        font-weight: bold;
+        position: absolute;
+        display: none;
+        left: 85%;
+        top: 31%;
+        right: 5%;
+        bottom: 0;
+        opacity: 0;
+
+}
+
+.btn-1:hover {
+        background:#67a580;
+        transition: all 0.5s;
+        border-radius: 10px;
+        box-shadow: 0px 6px 15px #0000ff61;
+        padding: 1.5rem 3.5rem 1.5rem 1.5rem;
+}
+
+/* .btn-1::after {
+    opacity: 1;
+    transition: all 0.5s;
+
+} */
+
+
 
 
 
