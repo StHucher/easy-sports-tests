@@ -56,3 +56,14 @@ body {
     padding-left:50px;
     padding-right:50px;
   }
+
+  .title{
+      font-family: 'Graduate', cursive;
+      margin-top:1rem;
+      margin-bottom: 2rem;
+  }
+
+  .title-page{
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+  }
