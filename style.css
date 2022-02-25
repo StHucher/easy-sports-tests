@@ -53,17 +53,20 @@ body {
     color: #a5aec0
 }
 .navbar-nav > li{
-    padding-left:50px;
-    padding-right:50px;
+    padding-left:80px;
+    padding-right:80px;
   }
 
-  .title{
-      font-family: 'Graduate', cursive;
-      margin-top:1rem;
-      margin-bottom: 2rem;
-  }
+.title{
+    font-family: 'Graduate', cursive;
+    margin-bottom: 2rem;
+}
 
-  .title-page{
-      margin-top: 3rem;
-      margin-bottom: 3rem;
-  }
+.title-page{
+    margin-top: 3rem;
+    font-family: 'Graduate', cursive;
+}
+
+.bg-header {
+    background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
+}
