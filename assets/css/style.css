@@ -7,9 +7,19 @@
 */
 body {
     min-height: 100vh;
+    /* background-image: url("../images/grass-g144bef10d_1920.jpg");*/
     
 } 
 
+.bg-header {
+    background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
+}
+
+
+.active {
+    border-bottom: 2px black solid;
+
+}
 
 
 /* fait passer la navbar au dessus du texte */
