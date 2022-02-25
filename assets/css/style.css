@@ -7,17 +7,27 @@
 */
 body {
     min-height: 100vh;
-    background:
-    linear-gradient(
-        to bottom right,
-        #3e5151, #decba4
-        /* #636363, #a2ab58 */
-      ); 
+    background-color: #eee
+}
 
-    /* background-image: url("team.jpg");
-    background-position: right;
-    background-repeat: no-repeat; */
-} 
+.bg-header {
+    background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
+}
+
+.navbar-nav > li{
+    padding-left:80px;
+    padding-right:80px;
+}
+
+.title{
+    font-family: 'Graduate', cursive;
+    margin-bottom: 2rem;
+  }
+  
+  .title-page{
+    margin-top: 3rem;
+    font-family: 'Graduate', cursive;
+  }
 
 
 
