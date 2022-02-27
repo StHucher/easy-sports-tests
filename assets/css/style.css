@@ -55,15 +55,15 @@ body {
 }
 
 /*change the cursor to pointer*/
-.resultblock {
+/* .resultblock {
     transition: all 0.2s ease;
     cursor: pointer;    
-}
+} */
 
 /*transform effect with hover on the resultblock*/
-.resultblock:hover{
+/* .resultblock:hover{
     transform:scale(1.05);    
-}
+} */
 
 .card {
     border: none;
