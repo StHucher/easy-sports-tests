@@ -1,0 +1,59 @@
+.navbar-nav > li{
+    padding-left:80px;
+    padding-right:80px;
+  }
+
+.title{
+    font-family: 'Graduate', cursive;
+    margin-bottom: 2rem;
+}
+
+.title-page{
+    margin-top: 3rem;
+    font-family: 'Graduate', cursive;
+}
+
+.bg-header {
+    background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
+}
+
+body {
+    background-color: #f1f1f1;
+}
+
+.container_team{
+    border-radius: 20px;
+    border:transparent;
+    margin: 4rem auto;
+    padding:2rem;
+    display:flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px 5px rgb(34,139,34);
+}
+
+.team_name{
+    width:100%;
+    text-align: center;
+    margin:1rem 0;
+    font-family: 'Graduate', cursive;
+}
+
+.title_page{
+    font-family: 'Graduate', cursive;
+    margin:2rem 0;
+}
+
+.player_card{
+    margin:1em;
+}
+
+@media screen and (max-width:767px)
+{
+   
+    img{
+        display:none;
+    }
+}
