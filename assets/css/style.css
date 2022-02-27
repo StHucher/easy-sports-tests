@@ -76,11 +76,7 @@ body {
     background-color:#eee;
 }
 
-.row{
-    justify-content: space-between;
-}
-
-.row2{
+ .row{
     justify-content: space-between;
 }
 
@@ -144,6 +140,17 @@ body {
     width: 100%;
   }
 
+
+  /*breakpoint to improve the 2nd row's layout*/
+  @media screen and (min-width:992px) {
+    .row2{
+      justify-content: left;
+    }
+
+    .profilcard{
+       margin-left: 2em;
+    }
+  }
 
 
 
