@@ -1,11 +1,54 @@
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSES
-* ==========================================
-*
-*/
+.navbar-nav > li{
+    padding-left:80px;
+    padding-right:80px;
+  }
+
+.title{
+    font-family: 'Graduate', cursive;
+    margin-bottom: 2rem;
+}
+
+.title-page{
+    margin-top: 3rem;
+    font-family: 'Graduate', cursive;
+}
+
+.bg-header {
+    background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
+}
+
+
+.container_team{
+    border-radius: 20px;
+    border:transparent;
+    margin: 4rem auto;
+    padding:2rem;
+    display:flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px 5px rgb(34,139,34);
+}
+
+.team_name{
+    width:100%;
+    text-align: center;
+    margin:1rem 0;
+    font-family: 'Graduate', cursive;
+}
+
+.title_page{
+    font-family: 'Graduate', cursive;
+    margin:2rem 0;
+}
+
+.player_card{
+    margin:1em;
+}
+
 body {
+
     min-height: 100vh;
     /* background-image: url("../images/grass-g144bef10d_1920.jpg");*/
     
@@ -19,32 +62,47 @@ body {
 .active {
     border-bottom: 2px black solid;
 
+
+    background-color: #eee
 }
 
+.card {
+    border: none;
+    border-radius: 10px
 
-/* fait passer la navbar au dessus du texte */
-.navbar {
-    z-index: 9999;
 }
 
-/* Image page d'accueil*/
-.bg-image{
-    background-size: cover;
-    min-height: 100vh;
-}  
+.c-details span {
+    font-weight: 300;
+    font-size: 13px
+}
 
-/* div de présentation sur la home */
-.bg-opacity {
-    background: rgb(0, 0, 0); 
-    background: rgba(0, 0, 0, 0.3); 
-    color: #f1f1f1; /* Grey text */
-    width: 80%; /* Full width */
-    padding: 20px; /* Some padding */
-    position: absolute;
-    z-index: 0;
-    top: 50%;
-    left: 50%;
-    /*  */transform: translate(-50%, -50%);   
+.icon {
+    width: 50px;
+    height: 50px;
+    background-color: #eee;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 39px
+}
+
+.badge span {
+    background-color: #fffbec;
+    width: 60px;
+    height: 25px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    display: flex;
+    color: #fed85d;
+    justify-content: center;
+    align-items: center
+}
+
+.progress {
+    height: 10px;
+    border-radius: 10px
 }
 
 .resultblock{
@@ -54,6 +112,43 @@ body {
 
 .resultblock:hover {
     transform: scale(1.05);
+
+.progress div {
+    background-color: red
 }
 
+.text1 {
+    font-size: 14px;
+    font-weight: 600
 
+}
+
+.text2 {
+    color: #a5aec0
+}
+.navbar-nav > li{
+    padding-left:80px;
+    padding-right:80px;
+  }
+
+.title{
+    font-family: 'Graduate', cursive;
+    margin-bottom: 2rem;
+}
+
+.title-page{
+    margin-top: 3rem;
+    font-family: 'Graduate', cursive;
+}
+
+.bg-header {
+    background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
+}
+
+@media screen and (max-width:767px)
+{
+   
+    img{
+        display:none;
+    }
+}
