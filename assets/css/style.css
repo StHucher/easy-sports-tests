@@ -29,6 +29,11 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 10px 5px rgb(34,139,34);
+    background-color:rgba(15, 153, 86, 0.05)
+}
+
+.card-body{
+    background-color:white;
 }
 
 .team_name{
@@ -51,6 +56,7 @@ body {
 
     min-height: 100vh;
     /* background-image: url("../images/grass-g144bef10d_1920.jpg");*/
+    background-color:rgb(245, 245, 245);
     
 } 
 
@@ -67,8 +73,9 @@ body {
 }
 
 .card {
-    border: none;
-    border-radius: 10px
+    border: transparent;
+    border-radius: 10px;
+    overflow: hidden;
 
 }
 
@@ -112,6 +119,7 @@ body {
 
 .resultblock:hover {
     transform: scale(1.05);
+}
 
 .progress div {
     background-color: red
