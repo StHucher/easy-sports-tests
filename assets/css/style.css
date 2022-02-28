@@ -1,9 +1,7 @@
-
-
 body {
 
     min-height: 100vh;
-    background-color: #eee;
+    background-color:rgb(245, 245, 245);
 }
 
 .bg-header {
@@ -13,7 +11,7 @@ body {
 .navbar-nav > li{
     padding-left:80px;
     padding-right:80px;
-  }
+}
 
 .title{
     font-family: 'Graduate', cursive;
@@ -58,7 +56,7 @@ body {
 
 .buttoncard{
     box-shadow: none;
-    background-color:#eee;
+    background-color:rgb(245, 245, 245);
 }
 
  .row{
@@ -139,7 +137,8 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 10px 5px rgb(34,139,34);
-    background-color:rgba(15, 153, 86, 0.05)
+    background-color:rgba(15, 153, 86, 0.05);
+    position:relative;
 }
 
 .card-body{
@@ -149,7 +148,7 @@ body {
 .team_name{
     width:100%;
     text-align: center;
-    margin:1rem 0;
+    margin:1.5rem 0;
     font-family: 'Graduate', cursive;
 }
 
@@ -162,14 +161,6 @@ body {
     margin:1em;
 }
 
-body{
-    min-height: 100vh;
-    /* background-image: url("../images/grass-g144bef10d_1920.jpg");*/
-    background-color:rgb(245, 245, 245);
-}
-    
-    
-
 .bg-header {
     background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
 }
@@ -180,13 +171,6 @@ body{
 
 
     background-color: #eee
-}
-
-.card {
-    border: transparent;
-    border-radius: 10px;
-    overflow: hidden;
-
 }
 
 .c-details span {
