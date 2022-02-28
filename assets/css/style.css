@@ -3,7 +3,7 @@
 body {
 
     min-height: 100vh;
-    background-color: #eee;
+    background-color:rgb(245, 245, 245);
 }
 
 .bg-header {
@@ -58,7 +58,7 @@ body {
 
 .buttoncard{
     box-shadow: none;
-    background-color:#eee;
+    background-color:rgb(245, 245, 245);
 }
 
  .row{
@@ -71,59 +71,66 @@ body {
     padding:0px;
     background-color: #3f9e55;
     color:#fff
-  }
-  .btn-1:hover{
+}
+
+.btn-1:hover{
     background: transparent;
     color: #000;
-  }
-  .btn-1 span {
+}
+
+.btn-1 span {
     position: relative;
     display: block;
     width: 100%;
     height: 100%;
-  }
-  
-  .btn-1:before {
+}
+
+.btn-1:before {
     height: 0%;
     width: 2px;
-  }
-  .btn-1:after {
+}
+
+.btn-1:after {
     width: 0%;
     height: 5px;
-  }
-  .btn-1:hover:before {
+}
+
+.btn-1:hover:before {
     height: 100%;
-  }
-  .btn-1:hover:after {
+}
+
+.btn-1:hover:after {
     width: 100%;
-  }
-  .btn-1 span:before,
-  .btn-1 span:after {
+}
+
+.btn-1 span:before,
+.btn-1 span:after {
     position: absolute;
     content: "";
     right: 0;
     bottom: 0;
     background: #1e8b35;
     transition: all 0.3s ease;
-  }
-  /*rising line thickness*/
-  .btn-1 span:before {
+}
+
+/*rising line thickness*/
+.btn-1 span:before {
     width: 5px;
     height: 0%;
-  }
-  /*bottom line thickness*/
-  .btn-1 span:after {
+}
+/*bottom line thickness*/
+.btn-1 span:after {
     width: 0%;
     height: 5px;
-  }
-  /*lenght of the rising line*/
-  .btn-1 span:hover:before {
+}
+/*lenght of the rising line*/
+.btn-1 span:hover:before {
     height: 100%;
-  }
-  /*lenght of the bottom line*/
-  .btn-1 span:hover:after {
+}
+/*lenght of the bottom line*/
+.btn-1 span:hover:after {
     width: 100%;
-  }
+}
 
   /****End Page home_player****/
 
