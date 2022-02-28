@@ -36,6 +36,7 @@ body {
 /********************* Mise en place de la vignette de test pages Tests **********************/
 
 /*! row gutter vignette */
+/*to avoid the offset between the background of the card and the image*/
 .row-vignette{
     --bs-gutter-x : 0px;  
 }
@@ -45,23 +46,29 @@ body {
     text-align: center;
 }
 
+.vignette-tests:hover {
+    border: 6px #3f9e55 solid;
+    border-radius: 12px; 
+    z-index: 9999;      
+}
+
 .image-tests-common {
-    position: absolute; /* Position the background text */
-    background: rgb(0, 0, 0); /* Fallback color */
-    background: rgba(0, 0, 0, 0.7); /* Black background with 0.5 opacity */
-    color: #f1f1f1; /* Grey text */
-    width: 100%; /* Full width */
-    padding: 6px; /* Some padding */  
+    position: absolute; 
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    color: #f1f1f1; 
+    width: 100%; 
+    padding: 6px;
     left:0;
 }
 
 .image-tests-header{
-    top: 0; /* At the bottom. Use top:0 to append it to the top */ 
+    top: 0;
     border-radius: 10px 10px 0px 0px;
 }
 
 .image-tests-footer{
-    bottom: -8px; /* At the bottom. Use top:0 to append it to the top */
+    bottom: -8px;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -71,13 +78,6 @@ body {
     width:20em;
     border-radius: 10px;
 } 
-
-.vignette-tests:hover {
-    border: 6px #3f9e55 solid;
-    border-radius: 12px; 
-    z-index: 9999;  
-}
-
 
 /****************************************************************************************/
 
