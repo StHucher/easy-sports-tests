@@ -41,6 +41,12 @@ body {
     --bs-gutter-x : 0px;  
 }
 
+.vignette-card-dimension {
+    width: 20rem;
+    height: 14rem;
+
+}
+
 .vignette-tests {
     position: relative;
     text-align: center;
