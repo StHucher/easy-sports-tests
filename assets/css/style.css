@@ -19,6 +19,7 @@ body {
 
 .active {
     border-bottom: 2px black solid;
+    
 
 }
 
@@ -32,7 +33,92 @@ body {
 .bg-image{
     background-size: cover;
     min-height: 100vh;
-}  
+} 
+
+
+
+/* Mise en place de la vignette de test */
+
+/*! row gutter vignette */
+.row-vignette{
+  --bs-gutter-x : 0px;  
+}
+
+.vignette-tests {
+    position: relative;
+    text-align: center;
+}
+
+
+
+
+
+.image-tests-header{
+    position: absolute; /* Position the background text */
+    top: 0; /* At the bottom. Use top:0 to append it to the top */
+    background: rgb(0, 0, 0); /* Fallback color */
+    background: rgba(0, 0, 0, 0.7); /* Black background with 0.5 opacity */
+    color: #f1f1f1; /* Grey text */
+    width: 100%; /* Full width */
+    padding: 6px; /* Some padding */  
+    left:0;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.image-test-choice-menu {
+    position: absolute; /* Position the background text */
+    bottom: 0px; /* At the bottom. Use top:0 to append it to the top */
+    top: 0px;
+    background: rgb(0, 0, 0); /* Fallback color */
+    background: rgba(0, 0, 0, 0.2 ); /* Black background with 0.5 opacity */
+    color: #f1f1f1; /* Grey text */
+    width: 100%; /* Full width */
+    padding: 6px; /* Some padding */  
+    padding-top: 15px;
+    left:0;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.image-tests-body {
+    position: absolute; /* Position the background text */
+    bottom: 0px; /* At the bottom. Use top:0 to append it to the top */
+    top: 36px;
+   color: #f1f1f1; /* Grey text */
+    width: 100%; /* Full width */
+    padding: 6px; /* Some padding */  
+    padding-top: 15px;
+    left:0;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.image-tests-footer{
+    position: absolute; /* Position the background text */
+    bottom: -8px; /* At the bottom. Use top:0 to append it to the top */
+    background: rgb(0, 0, 0); /* Fallback color */
+    background: rgba(0, 0, 0, 0.7); /* Black background with 0.5 opacity */
+    color: #f1f1f1; /* Grey text */
+    width: 100%; /* Full width */
+    padding: 6px; /* Some padding */  
+    left:0;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.bg-image-tests{
+    background-size: cover;
+    height: 15em;
+    width:20em;
+    border-radius: 10px;
+    
+} 
+
+.vignette-tests:hover {
+    border: 6px #3f9e55 solid;
+    border-radius: 12px; 
+    z-index: 9999;  
+}
+
+
+/********************************************/
 
 
 .card {
@@ -123,5 +209,4 @@ body {
 .resultblock:hover {
     transform: scale(1.05);
 }
-
 
