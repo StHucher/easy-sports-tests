@@ -33,7 +33,7 @@ body {
     min-height: 100vh;
 } 
 
-/********** Mise en place de la vignette de test pages Tests ***********/
+/********************* Mise en place de la vignette de test pages Tests **********************/
 
 /*! row gutter vignette */
 .row-vignette{
@@ -45,7 +45,7 @@ body {
     text-align: center;
 }
 
-.tests-image-common {
+.image-tests-common {
     position: absolute; /* Position the background text */
     background: rgb(0, 0, 0); /* Fallback color */
     background: rgba(0, 0, 0, 0.7); /* Black background with 0.5 opacity */
@@ -79,7 +79,7 @@ body {
 }
 
 
-/********************************************/
+/****************************************************************************************/
 
 
 .card {
