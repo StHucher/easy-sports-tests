@@ -5,9 +5,7 @@
 {% block body %}
 <div class="container">
       <h2 class="title_page">Mes équipes</h2>
-        <div class="d-flex flex-row-reverse">
-          <button type="button" class="btn btn-success">Ajouter une équipe</button>
-    </div>
+ 
 
 
 
@@ -19,15 +17,27 @@
         {{ teams.user.firstname }}   
       <br>
    {% endfor %} #}
-                        <pre>
-                    {{ dump(teamPlayersListByTeam[1]) }}
-                </pre>
-                {% if teamPlayersListByTeam[1] | length > 1 %}
-                 <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>
-                {% else %}
-                     <button type="button" class="btn btn-success d-flex">Ajouter des joueurs avant de pouvoir faire un test</button>
-                {% endif %}
+{#         <pre>
+    {{ dump(teamPlayersListByTeam[1]) }}
+</pre>
+{% if teamPlayersListByTeam[0] | length > 1 %}
+    <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>
+{% else %}
+        <button type="button" class="btn btn-success d-flex">Ajouter des joueurs avant de pouvoir faire un test</button>
+{% endif %} #}
 
+{% if teamPlayersListByTeam[0] is not defined %}
+    <div>
+        Pour profiter de cette section veuillez créer votre première équipes
+        <button type="button" class="btn btn-success">Ajouter une équipe</button>
+        </div>
+{% else %}
+
+
+
+        <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn btn-success">Ajouter une équipe</button>
+            </div>
 
 {% set numberoOfTeam = 0 %}
   {% for  team in myTeams %}
@@ -36,7 +46,11 @@
 
         <div class="container_team">
 
-                <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>
+            {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
+                 <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>
+                {% else %}
+                     <button type="button" class="btn btn-success d-flex">Ajouter des joueurs avant de pouvoir faire un test</button>
+                {% endif %}
 
 
 
@@ -66,7 +80,7 @@
 
    {% set numberoOfTeam = numberoOfTeam + 1 %}  
 {% endfor %}
-
+{% endif %}
 
 
 {#     <div class="container_team">
