@@ -2,8 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Club;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +16,15 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
+            /* ->add('roles', ChoiceType::class, [
+                'label' => 'Etes-vous ?',
+                'choices' => [
+                    'player' => 'joueur',
+                    'coach' => 'entraineur'
+                ],
+                'multiple' => false,
+                'expanded' => true
+            ]) */
             ->add('password')
             ->add('firstname')
             ->add('lastname')
@@ -22,7 +33,13 @@ class UserType extends AbstractType
             ->add('slug')
             ->add('picture')
             ->add('city')
-            ->add('club')
+            ->add('club', EntityType::class,[
+                'class' => Club::class,
+                'choice_label'=> 'name',
+
+                'multiple' => false,
+                'expanded' => true,
+            ])
         ;
     }
 
