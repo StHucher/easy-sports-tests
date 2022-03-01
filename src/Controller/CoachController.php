@@ -77,7 +77,8 @@ class CoachController extends AbstractController
           //  dump($countUsersNumber);
             
         }
-
+        //$compte= count($teamPlayersListByTeam[0]);
+        //dd($teamPlayersListByTeam);
         // $teamPlayersList [1 => liste des joueurs, 8 => liste des joueurs]
         //dump($teamPlayersListByTeam);
 
