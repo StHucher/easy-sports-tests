@@ -6,9 +6,6 @@
 <div class="container">
     
     <h2 class="title_page">Mes équipes</h2>
- 
-
-
 
     {# Si l'entraineur n'a pas encore créé d'équipe il doit le faire #}
     {% if teamPlayersListByTeam[0] is not defined %}
@@ -24,7 +21,7 @@
         </div>
         </div>
 
-    {# Sinon l'entraineur à au moins une équipe #}
+    {# Sinon l'entraineur à au moins créé une équipe #}
     {% else %}
         <div class="d-flex flex-row-reverse">
             <button type="button" class="btn btn-success">Ajouter une équipe</button>
@@ -56,24 +53,24 @@
                     <h3 class="team_name">  {{ team.team.name }} {{ team.user.firstname }} </h3>
 
                         {# teamPlayersListByTeam[numberoOfTeam] représente les tableaux qui contiennent les joueurs  #}
-                        {% for teams in teamPlayersListByTeam[numberoOfTeam] %}
+                        {% for player in teamPlayersListByTeam[numberoOfTeam] %}
 
                             {# on ne veut oas récupérer l'entraineur mais seulement les joueurs (role == 0) #}
-                            {% if teams.role == 0 %}
+                            {% if player.role == 0 %}
                             
                                 <div class="player_card">
                                     <div class="card" style="width: 10rem;">
                                         {# si l'user n'a pas de photo affiche la photo de base #}
-                                        {% if teams.user.picture == NULL %}
+                                        {% if player.user.picture == NULL %}
                                             <img src="{{asset('assets/img/pexels-tima-miroshnichenko-6078303.jpg')}}" class="card-img-top" alt="...">
                                         {# sinon affiche sa photo #}
                                         {% else %}
-                                            <img src="{{asset('assets/img/' ~teams.user.picture)}}" class="card-img-top" alt="...">
+                                            <img src="{{asset('assets/img/' ~player.user.picture)}}" class="card-img-top" alt="...">
                                         
                                         {% endif %}
                                         <div class="card-body">
                                             <p class="card-text text-center">
-                                                <a href="#">{{ teams.user.firstname }}</a>
+                                                <a href="#">{{ player.user.firstname }}</a>
                                             </p>
                                         </div>
                                     </div>

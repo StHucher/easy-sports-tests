@@ -59,7 +59,7 @@ class CoachController extends AbstractController
 
         /* Grace au tableau contenant les id des équipes du coach 
            Je vais créer un autre tableau $teamPlayersListByTeam qui va prendre en :
-               - key   = l'id
+               - key   = l'id de l'équipe
                - value = la liste des joueurs
         */
 
