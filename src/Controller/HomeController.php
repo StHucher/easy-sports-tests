@@ -33,7 +33,7 @@ class HomeController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('homepage', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_player', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('home/new.html.twig', [
