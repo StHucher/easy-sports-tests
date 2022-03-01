@@ -22,7 +22,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/subscribe", name="homesubscription", methods={"GET", "POST"})
      */
-    /* public function new(Request $request, EntityManagerInterface $entityManager): Response
+     public function newUser(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -39,7 +39,7 @@ class HomeController extends AbstractController
             'user' => $user,
             'form' => $form,
         ]);
-    } */
+    }
 
     /**
      * @Route("/contact", name="contactpage")
