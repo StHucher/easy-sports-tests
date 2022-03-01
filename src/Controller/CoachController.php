@@ -9,12 +9,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class CoachController extends AbstractController
 {
     /**
-     * @Route("/coach", name="app_coach")
+     * @Route("/coach/slug/teams", name="app_coach")
      */
     public function index(): Response
     {
-        return $this->render('coach/home_coach.html.twig', [
+        return $this->render('common/team.html.twig', [
             'controller_name' => 'CoachController',
         ]);
     }
+
+
+
+
+
+
 }
