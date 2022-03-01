@@ -13,7 +13,7 @@ class CommonController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('common/test-history.html.twig', [
+        return $this->render('common/all_tests.html.twig', [
             'controller_name' => 'CommonController',
         ]);
     }
