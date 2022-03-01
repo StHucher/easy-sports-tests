@@ -20,6 +20,7 @@ class HomeController extends AbstractController
         return $this->render('home/homepage.html.twig');
     }
 
+    /*Function to create a new user*/
     /**
      * @Route("/subscribe", name="homesubscription", methods={"GET", "POST"})
      */
@@ -36,6 +37,7 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_player', [], Response::HTTP_SEE_OTHER);
         }
 
+        /*display the form*/
         return $this->renderForm('home/new.html.twig', [
             'user' => $user,
             'form' => $form,
