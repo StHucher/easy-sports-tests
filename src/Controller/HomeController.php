@@ -31,6 +31,10 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /*When you create a new user I fix the status to 1 (active) and define the slug*/
+            $user->setStatus(1);
+            $user->setSlug('test');
+
             $entityManager->persist($user);
             $entityManager->flush();
 
