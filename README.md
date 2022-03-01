@@ -1,2 +1,3 @@
 # projet-20-easy-sports-tests
-This project is developed by Olivier, Maxime et Stephane
+## Bienvenue dans le repository du projet Easy-Sports-Test
+### Maxime Stéphane, Olivier 
