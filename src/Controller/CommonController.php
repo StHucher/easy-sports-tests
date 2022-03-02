@@ -12,6 +12,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\ResultRepository;
 use App\Repository\TagRepository;
 use App\Repository\TagTestRepository;
+use App\Repository\TeamRepository;
 use App\Repository\TestRepository;
 use App\Repository\UserRepository;
 use DateTime;
@@ -79,32 +80,36 @@ class CommonController extends AbstractController
         return $this->render('common/technical_tests.html.twig',['tagTests'=> $tagTestRepo->findAll()]);
     }
 
+    
+
     /**
      * @Route("/tests/{id}", name="one_test",  requirements={"page"="\d+"}, methods={"GET", "POST"})
      *
      * @return Response
      */
-    public function registerTest(Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
+    public function registerTest(UserRepository $user ,SessionInterface $session,TeamRepository $team,Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
     {   
         $result = new Result();
-        // $teamsId = [];
-        // $activities = $userInterface->getActivities();
-        // foreach($activities as $activity){
-        //     $teamsId [] = $activity->getTeam()->getId();
-        // }
-        // $listPlayersByTeam = [];
-        // foreach($teamsId as $teamId){
-        //     $player = $activityRepository->findBy(['team'=>$teamId]);
-        //     $listPlayersByTeam [] = $player;
-        // }
+        $teamsId = [];
+        $activities = $userInterface->getActivities();
+        foreach($activities as $activity){
+            $teamsId [] = $activity->getTeam()->getId();
+        }
+        $listPlayersByTeam = [];
+        foreach($teamsId as $teamId){
+            $player = $activityRepository->findBy(['team'=>$teamId]);
+            $listPlayersByTeam[$teamId] = $player;
+        }
         
+
         $form = $this->createForm(ResultType::class, $result);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $result->setTest($test);
             $result->setDoneAt( new DateTime('now'));
-            if($userInterface->getStatus() == 1){
+            $u = $user->findBy(['id'=>$session->get('player')]);
+            $result->setUser($u[0]);
+            if(in_array("ROLE_COACH",$userInterface->getRoles())){
                 $result->setStatus(1);
             }else{
                 $result->setStatus(0);
@@ -118,8 +123,10 @@ class CommonController extends AbstractController
         return $this->renderForm('common/one_test.html.twig', [
             'test' => $test,
             'form' => $form,
-            // 'activities'=>$activities,
-            // 'listPlayersByTeam'=>$listPlayersByTeam
+            'activities'=>$activities,
+            'listPlayersByTeam'=>$listPlayersByTeam
         ]);
     }
+
+    
 }

@@ -23,9 +23,9 @@
 
     {# Sinon l'entraineur à au moins créé une équipe #}
     {% else %}
-    {% if app.user.roles == ["ROLE_COACH"] %}
+    {% if "ROLE_COACH" in user.roles %}
         <div class="d-flex flex-row-reverse">
-            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipes</a>
+            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
         </div>
     {% endif %}
         {# On créé une variable d'incrément qui correspond à la position de l'équipe dans le tableau #}
@@ -42,7 +42,7 @@
 
                     {# S'il n'y a pas que l'entraineur dans cette équipe on peut faire passer un test #}
                     {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
-                    {% if app.user.roles == ["ROLE_COACH"] %}
+                    {% if "ROLE_COACH" in user.roles %}
                         <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>   
                     {% endif %}
                     {# Sinon il faut ajouter des joueurs #}      

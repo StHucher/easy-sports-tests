@@ -15,11 +15,11 @@ class ResultType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('result')
-            ->add('user',EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'firstname',
-            ]);
+            ->add('result');
+            // ->add('user',EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'firstname',
+            // ]);
         
     }
 

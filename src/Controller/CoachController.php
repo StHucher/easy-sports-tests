@@ -78,7 +78,8 @@ class CoachController extends AbstractController
 
         return $this->render('common/team.html.twig', [
             'myTeams' => $myTeams,
-            'teamPlayersListByTeam' => $teamPlayersListByTeam
+            'teamPlayersListByTeam' => $teamPlayersListByTeam,
+            'user'=> $user
         ]);
     }
 
