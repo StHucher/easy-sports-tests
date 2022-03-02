@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Result;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,7 +15,12 @@ class ResultType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('result');
+            ->add('result')
+            ->add('user',EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'firstname',
+            ]);
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

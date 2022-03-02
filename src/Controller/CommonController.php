@@ -15,6 +15,7 @@ use App\Repository\TagTestRepository;
 use App\Repository\TestRepository;
 use App\Repository\UserRepository;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -83,42 +84,42 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function registerTest(Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository) : Response
+    public function registerTest(Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
     {   
         $result = new Result();
-        $teamsId = [];
-        $activities = $userInterface->getActivities();
-        foreach($activities as $activity){
-            $teamsId [] = $activity->getTeam()->getId();
-        }
-        $listPlayersByTeam = [];
-        foreach($teamsId as $teamId){
-            $player = $activityRepository->findBy(['team'=>$teamId]);
-            $listPlayersByTeam [] = $player;
-        }
+        // $teamsId = [];
+        // $activities = $userInterface->getActivities();
+        // foreach($activities as $activity){
+        //     $teamsId [] = $activity->getTeam()->getId();
+        // }
+        // $listPlayersByTeam = [];
+        // foreach($teamsId as $teamId){
+        //     $player = $activityRepository->findBy(['team'=>$teamId]);
+        //     $listPlayersByTeam [] = $player;
+        // }
         
         $form = $this->createForm(ResultType::class, $result);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $result->setUser($userInterface);
             $result->setTest($test);
             $result->setDoneAt( new DateTime('now'));
-            if($userInterface->status == 1){
+            if($userInterface->getStatus() == 1){
                 $result->setStatus(1);
             }else{
                 $result->setStatus(0);
             }
             
-            
+            $manager->persist($result);
+            $manager->flush();
 
-            return $this->redirectToRoute('home_user', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_home',['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('common/one_test.html.twig', [
             'test' => $test,
             'form' => $form,
-            'activities'=>$activities,
-            'listPlayersByTeam'=>$listPlayersByTeam
+            // 'activities'=>$activities,
+            // 'listPlayersByTeam'=>$listPlayersByTeam
         ]);
     }
 }
