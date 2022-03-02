@@ -110,7 +110,7 @@ class Team
     }
 
     /**
-     * @return Collection<int, Activity>
+     * @return Collection <int, Activity>
      */
     public function getActivities(): Collection
     {
