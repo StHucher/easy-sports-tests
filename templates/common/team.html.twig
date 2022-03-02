@@ -23,7 +23,7 @@
 
     {# Sinon l'entraineur à au moins créé une équipe #}
     {% else %}
-    {% if app.user.roles == 1 %}
+    {% if app.user.roles == ["ROLE_COACH"] %}
         <div class="d-flex flex-row-reverse">
             <button type="button" class="btn btn-success">Ajouter une équipe</button>
         </div>
@@ -42,7 +42,7 @@
 
                     {# S'il n'y a pas que l'entraineur dans cette équipe on peut faire passer un test #}
                     {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
-                    {% if app.user.roles == 1 %}
+                    {% if app.user.roles == ["ROLE_COACH"] %}
                         <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>   
                     {% endif %}
                     {# Sinon il faut ajouter des joueurs #}      

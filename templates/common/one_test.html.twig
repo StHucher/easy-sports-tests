@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue</h1>
+
+<li>{{test.name}} (en {{test.unit}})</li>
+<li>{{test.description}}</li>
+
+{% for activity in activities %}
+    <select class="form-select" aria-label="Default select example">
+      <option selected>{{activity.team.name}}</option>
+      {% set numberoOfTeam = 0 %}
+  {% for player in listPlayersByTeam[numberoOfTeam] %}
+  <option value="1">{{player.user.firstname}}</option>
+  {% endfor %}
+{% endfor %}
+
+    {{ include('common/_form.html.twig') }}
+
+    <a href="{{ path('homepage') }}">retour à l'accueil</a>
+{% endblock %}

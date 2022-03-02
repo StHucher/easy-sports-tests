@@ -29,13 +29,16 @@
                     </div>
                 </div>
 
+                <div class="card mb-5 col-xs-12 col-lg-4 buttoncard order-sm-2" style="width: 12rem;">                      
+                  <button type = "button" class="btn-1 mt-5"><span>Testez votre joueur</span></button>                
+                </div>
                 
 
                 <div class="card mb-5 " style="width: 18rem;">
                   <div class="card-body">
                     <h5 class="card-title"><a href="{{ path('history', {slug: user.slug}) }}">Voir ses Résultats</a></h5>
                     <ul class="list-group list-group-flush">
-                    {% for result in user.results%}
+                    {% for result in user.results %}
                       <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}}</li>
                       {% endfor %}
                       
