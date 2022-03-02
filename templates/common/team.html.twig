@@ -50,7 +50,10 @@
 
 
                     {# team dans la table activity fait le lien avec les tables team et user (team.name ou encore team.user) #}
-                    <h3 class="team_name">  {{ team.team.name }} {{ team.user.firstname }} </h3>
+                    <div class="team_name">
+                    <h3>  {{ team.team.name }} - {{ team.team.ageCategory }}  </h3>
+                    <h5>{{ team.user.firstname }} {{ team.user.lastname }}</h5>
+                    </div>
 
                         {# teamPlayersListByTeam[numberoOfTeam] représente les tableaux qui contiennent les joueurs  #}
                         {% for player in teamPlayersListByTeam[numberoOfTeam] %}
