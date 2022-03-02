@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserType extends AbstractType
 {
@@ -21,7 +23,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'required' => true
+                'required' => true,
             ])
             ->add('roles', ChoiceType::class, [
                 'label' => 'Etes-vous ?',
@@ -32,7 +34,25 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'expanded' => true
             ])
-            ->add('password', PasswordType::class)
+            ->add('password', PasswordType::class, [
+                
+                    // instead of being set onto the object directly,
+                    // this is read and encoded in the controller
+                    /* 'mapped' => false, */
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Un mot de passe est nécessaire',
+                        ]),
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                            // max length allowed by Symfony for security reasons
+                            'max' => 4096,
+                        ]),
+                    ],
+                ])
+            
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom'
             ] )
