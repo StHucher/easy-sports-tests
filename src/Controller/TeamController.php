@@ -2,13 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Entity\Team;
+use App\Entity\User;
 use App\Form\TeamType;
+use App\Repository\ActivityRepository;
 use App\Repository\TeamRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Proxies\__CG__\App\Entity\Team as EntityTeam;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("coach/team")
@@ -28,14 +35,35 @@ class TeamController extends AbstractController
     /**
      * @Route("/new", name="app_team_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, TeamRepository $teamRepository): Response
+    public function new(Request $request, TeamRepository $teamRepository, UserInterface $user, /* UserRepository $user, */ EntityManagerInterface $doctrine): Response
     {
         $team = new Team();
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
 
+        // l'objet Activity est obligatoire car team->addActivity() attend un objet Activity en param
+        $activity = new Activity();
+
+    
         if ($form->isSubmitted() && $form->isValid()) {
+            //$team->addActivity($activity);
             $teamRepository->add($team);
+
+            // je set l'objet activity avec :
+            // - $user courant de userInterface
+            // - $team qui est l'équipe fraichement créée 
+            // - $role 1 = entraîneur qui n'est pas fixé chez moi en bdd
+            $activity->setUser($user);
+            $activity->setTeam($team);
+            $activity->setRole(1); 
+    
+            $newActivity = $team->addActivity($activity);
+            $doctrine->persist($newActivity);
+            $doctrine->persist($activity);
+            $doctrine->persist($user);
+           
+            $doctrine->flush(); 
+
             return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }
 

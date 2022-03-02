@@ -83,6 +83,8 @@
                         <div class="row g-0">
                             <div class="d-flex align-items-center justify-content-center col-5 col-lg-4  " >
                                 <img src="{{asset('assets/img/simon-robben.jpg')}}" alt="avatar" class="   bd-placeholder-img rounded-circle" width="130" height="130">
+
+                               
                             </div>
                             <div class=" col-7 col-lg-8">
                                  <div class="card-body text-dark">
@@ -99,7 +101,8 @@
                 </div>
 
                 <div class="card mb-5 col-xs-12 col-lg-4 buttoncard order-sm-2" style="width: 12rem;">                      
-                  <button type = "button" class="btn-1 mt-5"><span>Passer un test</span></button>                
+                  {# <button type = "button" class="btn-1 mt-5"><span>Passer un test</span></button> #} 
+                  <a href="{{ path('tests')}}" class="btn-1 mt-5 btntest" role="button"><span>Passer un test</span></a>               
                 </div> 
 
                 <div class="card mb-5 " style="width: 18rem;">

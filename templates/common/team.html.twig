@@ -16,7 +16,7 @@
             <p>Pour profiter de cette section veuillez créer votre première équipes</p>
           </div>
           <div class="col-12 col-sm-6">
-            <button type="button" class="btn btn-success">Ajouter une équipe</button>
+            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
           </div>
         </div>
         </div>
@@ -25,7 +25,7 @@
     {% else %}
     {% if app.user.roles == ["ROLE_COACH"] %}
         <div class="d-flex flex-row-reverse">
-            <button type="button" class="btn btn-success">Ajouter une équipe</button>
+            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipes</a>
         </div>
     {% endif %}
         {# On créé une variable d'incrément qui correspond à la position de l'équipe dans le tableau #}
@@ -52,7 +52,10 @@
 
 
                     {# team dans la table activity fait le lien avec les tables team et user (team.name ou encore team.user) #}
-                    <h3 class="team_name">  {{ team.team.name }} {{ team.user.firstname }} </h3>
+                    <div class="team_name">
+                    <h3>  {{ team.team.name }} - {{ team.team.ageCategory }}  </h3>
+                    <h5>{{ team.user.firstname }} {{ team.user.lastname }}</h5>
+                    </div>
 
                         {# teamPlayersListByTeam[numberoOfTeam] représente les tableaux qui contiennent les joueurs  #}
                         {% for player in teamPlayersListByTeam[numberoOfTeam] %}
