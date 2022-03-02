@@ -29,8 +29,9 @@ class UserType extends AbstractType
                     'Joueur' => 'ROLE_PLAYER',
                     'Entraineur' => 'ROLE_COACH'
                 ],
-                'multiple' => true,
-                'expanded' => true
+                'multiple' => false,
+                'expanded' => true, 
+                'mapped' => false
             ])
             ->add('password', PasswordType::class)
             ->add('firstname', TextType::class, [

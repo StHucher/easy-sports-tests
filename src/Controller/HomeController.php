@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -24,7 +25,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/subscribe", name="homesubscription", methods={"GET", "POST"})
      */
-     public function newUser(Request $request, EntityManagerInterface $entityManager): Response
+     public function newUser(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -32,8 +33,13 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /*When you create a new user I fix the status to 1 (active) and define the slug*/
+
+            $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
             $user->setStatus(1);
             $user->setSlug('test');
+
+            
+            
 
             $entityManager->persist($user);
             $entityManager->flush();
