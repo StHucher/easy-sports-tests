@@ -36,12 +36,12 @@ class HomeController extends AbstractController
             $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
             /*When you create a new user I fix the status to 1 (active) and define the slug*/
             $user->setStatus(1);
-            $user->setSlug('test');
+            $user->setSlug('slug');
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_player', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
         /*display the form*/
