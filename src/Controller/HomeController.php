@@ -39,6 +39,9 @@ class HomeController extends AbstractController
             $user->setSlug('test');
             $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
 
+            
+
+
             $entityManager->persist($user);
             $entityManager->flush();
 
