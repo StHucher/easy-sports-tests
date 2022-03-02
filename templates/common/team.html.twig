@@ -16,7 +16,7 @@
             <p>Pour profiter de cette section veuillez créer votre première équipes</p>
           </div>
           <div class="col-12 col-sm-6">
-            <button type="button" class="btn btn-success">Ajouter une équipe</button>
+            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
           </div>
         </div>
         </div>
@@ -24,7 +24,7 @@
     {# Sinon l'entraineur à au moins créé une équipe #}
     {% else %}
         <div class="d-flex flex-row-reverse">
-            <button type="button" class="btn btn-success">Ajouter une équipe</button>
+            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipes</a>
         </div>
 
         {# On créé une variable d'incrément qui correspond à la position de l'équipe dans le tableau #}
