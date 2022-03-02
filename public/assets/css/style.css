@@ -203,7 +203,8 @@ body {
     display: flex;
     color: #fed85d;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    margin-bottom:1em;
 }
 
 .progress {
@@ -305,5 +306,7 @@ body {
     width:20em;
     border-radius: 10px;
 } 
-
+.active{
+    background-color: transparent ;
+}
 /****************************************************************************************/

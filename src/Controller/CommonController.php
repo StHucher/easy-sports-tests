@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
+use App\Repository\TagRepository;
 use App\Repository\TagTestRepository;
 use App\Repository\TestRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,10 +53,9 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function testPhysique() : Response
+    public function testPhysique(TagTestRepository $tagTestRepo) : Response
     {
-        
-        return $this->render('common/technical_tests.html.twig');
+        return $this->render('common/technical_tests.html.twig',['tagTests'=> $tagTestRepo->findAll()]);
     }
 
     /**

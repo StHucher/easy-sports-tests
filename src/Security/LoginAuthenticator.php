@@ -48,12 +48,9 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        if(in_array('joueur',$token->getRoleNames())){
-            return new RedirectResponse($this->urlGenerator->generate('app_player'));
-        }
-        else{
-            return new RedirectResponse($this->urlGenerator->generate('app_coach'));
-        }
+        
+            return new RedirectResponse($this->urlGenerator->generate('user_home',['slug'=>$token->getUser()->getSlug()]));
+        
         
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
