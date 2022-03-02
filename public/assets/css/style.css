@@ -52,6 +52,16 @@ body {
     box-shadow: 8px 8px 5px rgb(80, 80, 80);
 }
 
+.btntest{
+    border:2px solid rgb(80,80,80); 
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-info > a{
+    color:red;
+}
+
 .buttoncard{
     box-shadow: none;
     background-color:rgb(245, 245, 245);
