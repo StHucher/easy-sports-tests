@@ -70,24 +70,10 @@ class CoachController extends AbstractController
             $players = $activityRepository->findBy(['team' => $teamId]);
             // si le nombre de personne de cette équipe = 1 c'est qu'il n'y a que l'entraineur ...)
             $countUsersNumber = count($players);
-/*             if ($countUsersNumber > 0) {
-               }    */
-                $teamPlayersListByTeam [] = $players;
-           
-          //  dump($countUsersNumber);
-            
+
+                $teamPlayersListByTeam [] = $players;    
         }
-        //$compte= count($teamPlayersListByTeam[0]);
-        //dd($teamPlayersListByTeam);
-        // $teamPlayersList [1 => liste des joueurs, 8 => liste des joueurs]
-        //dump($teamPlayersListByTeam);
 
-        
-
-
-
-   
-        //dd($myTeams[1]);
         // récupère les équipes grace a la propriété de user 
 
         return $this->render('common/team.html.twig', [
