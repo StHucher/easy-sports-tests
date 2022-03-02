@@ -38,7 +38,7 @@ class CoachController extends AbstractController
 
        // je récupère toutes les équipes de l'utilisateur
         $myTeams = $user->getActivities();
-
+       // dd($myTeams);
         /* J'exclus les équipes dont l'entraîneur n'est que joueur :
             - j'enregistre les id des équipes coach dans le tableau $teamsIdList 
             - si le role du coach dans cet équipe est 0 (joueur) 
