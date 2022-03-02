@@ -13,8 +13,8 @@ class PlayerController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('player/home_player.html.twig', [
-            'controller_name' => 'PlayerController',
+        return $this->render('common/home.html.twig', [
+            'controller_name' => 'CommonController',
         ]);
     }
 }
