@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/coach")
@@ -27,11 +28,11 @@ class CoachController extends AbstractController
     }
 
      /**
-     * @Route("/{id}/teams", name="coach_teams")
+     * @Route("/teams", name="coach_teams")
      */   
-    public function teams(UserRepository $userRepository, ActivityRepository $activityRepository, $id): Response
+    public function teams(UserRepository $userRepository, ActivityRepository $activityRepository, UserInterface $currentUser): Response
     {
-
+        $id = $currentUser->getId(); 
         //je récupère l'id du user
         $user = $userRepository->find($id);
 
