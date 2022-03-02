@@ -6,7 +6,7 @@
 <div class ="container"> 
           
             <div class="row">
-              <h2 class="title-page mb-5">Welcome</h2>
+              <h2 class="title-page mb-5">Welcome {{user.firstname}}</h2>
 
                 <div class="col-xs-12 col-lg-5 order-lg-last">
                     <div class="d-flex justify-content-between card mb-3 bg-white" >
@@ -16,9 +16,11 @@
                             </div>
                             <div class=" col-7 col-lg-8">
                                  <div class="card-body text-dark">
-                                    <h5 class="card-title">Lionel Ronaldo</h5>
-                                    <p class="card-text">FC Limène</p>
-                                    <p class="card-text">Equipe 1</p>
+                                    <h5 class="card-title">{{user.firstname}}, {{user.lastname}}</h5>
+                                    <p class="card-text">{{user.club}}</p>
+                                    {% for activity in user.activities%}
+                                    <p class="card-text">{{activity.team.name}}, {{(activity.role)}}</p>
+                                    {% endfor %}
                                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                                 </div>
                             </div>
@@ -32,11 +34,12 @@
 
                 <div class="card mb-5 " style="width: 18rem;">
                   <div class="card-body">
-                    <h5 class="card-title">Mes Résultats</h5>
+                    <h5 class="card-title"><a href="{{ path('history', {slug: user.slug}) }}">Mes Résultats</a></h5>
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Jongles pied fort: 25</li>
-                      <li class="list-group-item">100m: 15s</li>
-                      <li class="list-group-item">10m: 2s</li>
+                    {% for result in user.results%}
+                      <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}}</li>
+                      {% endfor %}
+                      
                     </ul>
                   </div>
                 </div>
@@ -50,11 +53,12 @@
                     
                     <div class="card mb-5 col-xs-12 col-lg-4" style="width: 18rem;">
                       <div class="card-body ">
-                        <h5 class="card-title">Mon Equipe</h5>
+                        <h5 class="card-title"> {% if 'ROLE_COACH' in user.roles %} Mes équipes {% else %} Mon équipe {% endif %} </h5>
                         <ul class="list-group list-group-flush">
-                          <li class="list-group-item">An item</li>
-                          <li class="list-group-item">A second item</li>
-                          <li class="list-group-item">A third item</li>
+                        {% for activity in user.activities %}
+                        <li class="list-group-item">{{activity.team.name}}, [{{activity.team.ageCategory}}]</li>
+                          <li class="list-group-item">Role : {% if activity.role == 1 %}Entraineur {% else %} Joueur {% endif %}</li>
+                          {% endfor %}
                         </ul>
                       </div>
                     </div>
@@ -65,9 +69,9 @@
                       <div class="card-body">
                         <h5 class="card-title">Mon Profil</h5>
                         <ul class="list-group list-group-flush">
-                          <li class="list-group-item">An item</li>
-                          <li class="list-group-item">A second item</li>
-                          <li class="list-group-item">A third item</li>
+                          <li class="list-group-item">Modifier mon profil</li>
+                          <li class="list-group-item">Ajouter une photo de profil</li>
+                          <li class="list-group-item">Modifier mon mot de passe</li>
                         </ul>
                       </div>
                     </div>
