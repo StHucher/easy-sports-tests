@@ -2,18 +2,28 @@
 
 namespace App\Controller;
 
+use App\Entity\Result;
 use App\Entity\Tag;
 use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
+use App\Form\ResultType;
+use App\Repository\ActivityRepository;
+use App\Repository\ResultRepository;
 use App\Repository\TagRepository;
 use App\Repository\TagTestRepository;
 use App\Repository\TestRepository;
+use App\Repository\UserRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class CommonController extends AbstractController
 {
@@ -55,7 +65,7 @@ class CommonController extends AbstractController
      */
     public function testPhysique(TagTestRepository $tagTestRepo) : Response
     {
-        return $this->render('common/technical_tests.html.twig',['tagTests'=> $tagTestRepo->findAll()]);
+        return $this->render('common/physical_tests.html.twig',['tagTests'=> $tagTestRepo->findAll()]);
     }
 
     /**
@@ -63,9 +73,53 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function testTechnique() : Response
+    public function testTechnique(TagTestRepository $tagTestRepo) : Response
     {   
         
-        return $this->render('common/technical_tests.html.twig');
+        return $this->render('common/technical_tests.html.twig',['tagTests'=> $tagTestRepo->findAll()]);
+    }
+
+    /**
+     * @Route("/tests/{id}", name="one_test",  requirements={"page"="\d+"}, methods={"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function registerTest(Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
+    {   
+        $result = new Result();
+        // $teamsId = [];
+        // $activities = $userInterface->getActivities();
+        // foreach($activities as $activity){
+        //     $teamsId [] = $activity->getTeam()->getId();
+        // }
+        // $listPlayersByTeam = [];
+        // foreach($teamsId as $teamId){
+        //     $player = $activityRepository->findBy(['team'=>$teamId]);
+        //     $listPlayersByTeam [] = $player;
+        // }
+        
+        $form = $this->createForm(ResultType::class, $result);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $result->setTest($test);
+            $result->setDoneAt( new DateTime('now'));
+            if($userInterface->getStatus() == 1){
+                $result->setStatus(1);
+            }else{
+                $result->setStatus(0);
+            }
+            
+            $manager->persist($result);
+            $manager->flush();
+
+            return $this->redirectToRoute('user_home',['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+        return $this->renderForm('common/one_test.html.twig', [
+            'test' => $test,
+            'form' => $form,
+            // 'activities'=>$activities,
+            // 'listPlayersByTeam'=>$listPlayersByTeam
+        ]);
     }
 }

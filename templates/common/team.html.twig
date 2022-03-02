@@ -23,10 +23,11 @@
 
     {# Sinon l'entraineur à au moins créé une équipe #}
     {% else %}
+    {% if app.user.roles == ["ROLE_COACH"] %}
         <div class="d-flex flex-row-reverse">
             <button type="button" class="btn btn-success">Ajouter une équipe</button>
         </div>
-
+    {% endif %}
         {# On créé une variable d'incrément qui correspond à la position de l'équipe dans le tableau #}
         {# exemples: teamPlayersListByTeam[0] , teamPlayersListByTeam[1] #}
         {% set numberoOfTeam = 0 %}
@@ -35,18 +36,19 @@
         {% for team in myTeams %}
 
             {# on ne garde que les lignes pour lesquelles l'entraîneur est coach et non joueur #}
-            {% if team.role == 1  %}
+            {# {% if team.role == 1  %} #}
 
                 <div class="container_team">
 
                     {# S'il n'y a pas que l'entraineur dans cette équipe on peut faire passer un test #}
                     {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
+                    {% if app.user.roles == ["ROLE_COACH"] %}
                         <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>   
-
-                    {# Sinon il faut ajouter des joueurs #}      
-                    {% else %}
-                            <button type="button" class="btn btn-success d-flex">Ajouter des joueurs avant de pouvoir faire un test</button>
                     {% endif %}
+                    {# Sinon il faut ajouter des joueurs #}      
+                    {# {% else %}
+                            <button type="button" class="btn btn-success d-flex">Ajouter des joueurs avant de pouvoir faire un test</button>
+                    {% endif %} #}
 
 
                     {# team dans la table activity fait le lien avec les tables team et user (team.name ou encore team.user) #}
@@ -70,7 +72,7 @@
                                         {% endif %}
                                         <div class="card-body">
                                             <p class="card-text text-center">
-                                                <a href="#">{{ player.user.firstname }}</a>
+                                                <a href="{{path('user_home', {slug : player.user.slug})}}">{{ player.user.firstname}}</a>
                                             </p>
                                         </div>
                                     </div>
