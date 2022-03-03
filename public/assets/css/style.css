@@ -5,7 +5,7 @@ body {
 }
 
 .bg-header {
-    background-image: linear-gradient(to right, #1e8b35, #3f9e55, #529c67, #55a36f, #67a580);
+    background-size: cover;
 }
 
 .navbar-nav > li{
@@ -15,6 +15,8 @@ body {
 
 .title{
     font-family: 'Graduate', cursive;
+    color: white;
+    font-size: 4rem;
     margin-bottom: 2rem;
 }
 
@@ -50,6 +52,16 @@ body {
     border: none;
     border-radius: 10px;
     box-shadow: 8px 8px 5px rgb(80, 80, 80);
+}
+
+.btntest{
+    border:2px solid rgb(80,80,80); 
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-info > a{
+    color:red;
 }
 
 .buttoncard{
@@ -173,7 +185,8 @@ body {
 
 .active {
     border-bottom: 2px black solid;
-    background-color: #eee
+    background-color: transparent;
+    border-bottom:2px white solid;
 }
 
 .c-details span {

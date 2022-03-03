@@ -50,11 +50,11 @@ class CoachController extends AbstractController
         foreach ($myTeams as $team) {
 
             // si il est enraineur de l'équipe
-            if ($team->getRole() == 1) {
+            
 
                 // enregistre l'id de l'équipe dans le tableau
                 $teamsIdList [] = $team->getTeam()->getId();
-            }
+            
 
         } 
 
@@ -78,9 +78,9 @@ class CoachController extends AbstractController
         // récupère les équipes grace a la propriété de user 
 
         return $this->render('common/team.html.twig', [
-            'controller_name' => 'CoachController',
             'myTeams' => $myTeams,
-            'teamPlayersListByTeam' => $teamPlayersListByTeam
+            'teamPlayersListByTeam' => $teamPlayersListByTeam,
+            'user'=> $user
         ]);
     }
 
