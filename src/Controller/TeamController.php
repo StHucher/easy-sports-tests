@@ -35,7 +35,7 @@ class TeamController extends AbstractController
     /**
      * @Route("/new", name="app_team_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, TeamRepository $teamRepository, UserInterface $user, /* UserRepository $user, */ EntityManagerInterface $doctrine): Response
+    public function new(Request $request, TeamRepository $teamRepository, UserInterface $user, EntityManagerInterface $doctrine): Response
     {
         $team = new Team();
         $form = $this->createForm(TeamType::class, $team);
