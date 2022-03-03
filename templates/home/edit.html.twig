@@ -1,8 +1,11 @@
-<div class ="mb-5">
-    
-</div>
+{% extends 'base.html.twig' %}
 
-<div class="row text-center">
+{% block title %}Nouvel utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Modifiez votre profil</h1>
+
+    <div class="row text-center">
         <div class="col-md-3 mb-3">
             {{ form_row(form.firstname) }} 
         </div>
@@ -28,8 +31,21 @@
           {{ form_row(form.roles) }}
         </div>
 
+        <div class=" col-md-3 mb-3">        
+          {{ form_row(form.picture) }}
+        </div>
+        <div class=" col-md-3 mb-3">        
+          {{ form_row(form.city) }}
+        </div>
+        <div class=" col-md-3 mb-3">        
+          {{ form_row(form.club) }}
+        </div>
+
 
 </div>
     <div class = "text-center mx-3">
     <button class="btn btn-success btn-lg my-5 " >{{ button_label|default('Enregistrer') }}</button>
 </div>
+
+    <a href="{{ path('homepage') }}">retour à l'accueil</a>
+{% endblock %}

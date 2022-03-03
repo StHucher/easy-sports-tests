@@ -66,7 +66,7 @@ class UserType extends AbstractType
                 'label' => 'Date de naissance',
                 'years' => range(1950,2050)
             ])
-            /* ->add('status')
+            ->add('status')
             ->add('slug')
             ->add('picture')
             ->add('city')
@@ -76,7 +76,7 @@ class UserType extends AbstractType
 
                 'multiple' => false,
                 'expanded' => true,
-            ]) */
+            ])
         ;
     }
 
