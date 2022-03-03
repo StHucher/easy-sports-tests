@@ -16,6 +16,7 @@
             <p>Pour profiter de cette section veuillez créer votre première équipes</p>
           </div>
           <div class="col-12 col-sm-6">
+
             <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
           </div>
         </div>
@@ -25,6 +26,7 @@
     {% else %}
     {% if "ROLE_COACH" in user.roles %}
         <div class="d-flex flex-row-reverse">
+
             <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
         </div>
     {% endif %}
@@ -42,13 +44,16 @@
 
                     {# S'il n'y a pas que l'entraineur dans cette équipe on peut faire passer un test #}
                     {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
-                    {% if "ROLE_COACH" in user.roles %}
-                        <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>   
-                    {% endif %}
+                    
+                        <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>
+                        <a href="{{ asset('coach/activity/new/'~team.team.id) }}" type="button" class="btn btn-success">Ajouter un joueur</a>
+                        
+                  
                     {# Sinon il faut ajouter des joueurs #}      
-                    {# {% else %}
-                            <button type="button" class="btn btn-success d-flex">Ajouter des joueurs avant de pouvoir faire un test</button>
-                    {% endif %} #}
+                    {% else %}
+                            <a href="{{ asset('coach/activity/new/'~team.team.id) }}" type="button" class="btn btn-success">Ajouter des joueurs avant de pouvoir faire un test</a>
+                    {% endif %}
+
 
 
                     {# team dans la table activity fait le lien avec les tables team et user (team.name ou encore team.user) #}

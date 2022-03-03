@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/coach")
@@ -27,17 +28,17 @@ class CoachController extends AbstractController
     }
 
      /**
-     * @Route("/{id}/teams", name="coach_teams")
+     * @Route("/teams", name="coach_teams")
      */   
-    public function teams(UserRepository $userRepository, ActivityRepository $activityRepository, $id): Response
+    public function teams(UserRepository $userRepository, ActivityRepository $activityRepository, UserInterface $currentUser): Response
     {
-
+        $id = $currentUser->getId(); 
         //je récupère l'id du user
         $user = $userRepository->find($id);
 
        // je récupère toutes les équipes de l'utilisateur
         $myTeams = $user->getActivities();
-
+       // dd($myTeams);
         /* J'exclus les équipes dont l'entraîneur n'est que joueur :
             - j'enregistre les id des équipes coach dans le tableau $teamsIdList 
             - si le role du coach dans cet équipe est 0 (joueur) 
