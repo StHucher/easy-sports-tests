@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{test.name}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center">{{test.name}} (en {{test.unit}})</h1>
+        <p>Description du test : {{test.description}}</p>
+
+    {% if not app.request.get('team') and not app.request.get('player') %}
+    <label for="teamSelect">Vos Equipes:</label>
+    <form id="form-team" method="POST" action="">
+        <select class="form-select" id="teamSelect" name="team" aria-label="Default select example">
+            <option selected>Choisissez une Equipe</option>
+            {% for activity in activities %}
+  
+            <option value="{{activity.team.id}}">{{activity.team.name}}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-primary" type="submit">Choisir cette Equipe</button>
+    </form>
+    {% endif %}
+    {% if app.request.get('team') %}
+    <label for="playerSelect">Vos joueurs:</label>
+    <form id="form-player" method="POST" action="{{path('one_test', {id : test.id})}}">
+        <select class="form-select" id="playerSelect" name="player" aria-label="Default select example">
+            <option selected>Choisissez un Joueur</option>
+            
+            {% for player in listPlayersByTeam[app.request.get('team')] %}
+            <option value="{{player.user.id}}">{{player.user.firstname}}</option>
+            {% endfor %}
+            
+        </select>
+        <button class="btn btn-primary" type="submit">Choisir ce Joueur</button>
+    </form>
+    {% endif %}
+        {% if app.request.get('player') %}
+        {{ app.session.set('player', app.request.get('player'))}}
+        {% endif %}
+    {{ include('common/_form.html.twig') }}
+
+    <a href="{{ path('user_home', {slug : app.user.slug}) }}">retour à l'accueil</a>
+    </div
+{% endblock %}
