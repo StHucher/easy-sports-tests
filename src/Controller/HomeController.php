@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +54,16 @@ class HomeController extends AbstractController
             'user' => $user,
             'form' => $form,
         ]);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @Route("/profil", name="profilpage", methods = {"GET", "POST"})
+     */
+    public function editUser(Request $request, EntityManagerInterface $entityManager, UserRepository $user)
+    {
+
     }
 
     /**
