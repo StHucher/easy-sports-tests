@@ -88,27 +88,14 @@ class CommonController extends AbstractController
      * @return Response
      */
     public function registerTest(UserRepository $user ,SessionInterface $session,TeamRepository $team,Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
-    {   
+    {       
         $result = new Result();
-        $teamsId = [];
-        $activities = $userInterface->getActivities();
-        foreach($activities as $activity){
-            $teamsId [] = $activity->getTeam()->getId();
-        }
-        $listPlayersByTeam = [];
-        foreach($teamsId as $teamId){
-            $player = $activityRepository->findBy(['team'=>$teamId]);
-            $listPlayersByTeam[$teamId] = $player;
-        }
-        
-
         $form = $this->createForm(ResultType::class, $result);
+        
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $result->setTest($test);
             $result->setDoneAt( new DateTime('now'));
-            $u = $user->findBy(['id'=>$session->get('player')]);
-            $result->setUser($u[0]);
             if(in_array("ROLE_COACH",$userInterface->getRoles())){
                 $result->setStatus(1);
             }else{
@@ -123,8 +110,6 @@ class CommonController extends AbstractController
         return $this->renderForm('common/one_test.html.twig', [
             'test' => $test,
             'form' => $form,
-            'activities'=>$activities,
-            'listPlayersByTeam'=>$listPlayersByTeam
         ]);
     }
 
