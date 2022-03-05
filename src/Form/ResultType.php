@@ -5,85 +5,49 @@ namespace App\Form;
 use App\Entity\Result;
 use App\Entity\Team;
 use App\Entity\User;
-use App\Repository\ActivityRepository;
 use App\Repository\TeamRepository;
-use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 
 class ResultType extends AbstractType
 {   
+
     private $security;
 
-    public function __construct(Security $security)
-    {
-            return $this->security = $security;
+    public function __construct(Security $security){
+        $this->security = $security;
     }
-
-
+   
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {   
-            $builder
-            ->add('result', TypeTextType::class,[
-                'label' => 'Résultat',
-            ])
-            // ->add('doneAt')
-            // ->add('status')
-            // ->add('test')
-            // ->add('user', EntityType::class,[
-            //     'class'=>User::class,
-            // ])
-        ;
-            $user = $this->security->getUser();
-            if (!$user) {
-                throw new \LogicException(
-                    'Il faut s\'identifier'
-                );
+        $user = $this->security->getUser();
+        $builder
+        ->add('team', EntityType::class,[
+            'class'=>Team::class,
+            'choice_label' => 'name',
+            'label' => 'Equipe',
+            'mapped' => false,
+            'placeholder' => 'Choisissez une équipe',
+            'query_builder' => function (TeamRepository $teamRepository) use ($user) {
+                return $teamRepository->createTeamFromUserQueryBuilder($user);
             }
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($user) {
-                $form = $event->getForm();
-
-                $formOptions = [
-                'class' => Team::class,
-                'label' => 'Equipe',
-                'choice_label' => 'name',
-                'query_builder' => function (TeamRepository $teamRepository) use ($user) {
-                    // call a method on your repository that returns the query builder
-                    return $teamRepository->createTeamFromUserQueryBuilder($user);
-                },
-            ];
-            
-            
-                $form->add('user', EntityType::class, $formOptions);
-            }
-            );
-            // $builder->addEventListener(
-            //     FormEvents::PRE_SET_DATA,
-            //     function (FormEvent $event) use ($user) {
-            //     $form = $event->getForm();
-
-            //     $formOptions = [
-            //     'class' => User::class,
-            //     'choice_label' => 'firstname',
-            //     'query_builder' => function (UserRepository $userRepository) use ($user) {
-            //         // call a method on your repository that returns the query builder
-            //         return $userRepository->createPlayerFromMyTeamsQueryBuilder($user);
-            //     },
-            // ];
-            
-            
-            //     $form->add('User', EntityType::class, $formOptions);
-            // }
-            // );
-        
+        ])
+        ->add('user', EntityType::class,[
+            'label' => 'Joueur',
+            'class'=>User::class,
+            'choice_label' => 'firstname',
+            'label_attr' => array('class' => 'd-none user_label'), # grâce à BS
+            'attr' => array('class'=>'d-none')
+        ])
+        ->add('result', TextType::class,[
+            'label' => 'Résultat',
+            'label_attr' => array('class' => 'd-none result_label'),
+            'attr' => array('class'=>'d-none')
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

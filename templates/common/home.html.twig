@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="card mb-5 col-xs-12 col-lg-4 buttoncard order-sm-2" style="width: 12rem;">                      
-                  <button type = "button" class="btn-1 mt-5"><span>Testez votre joueur</span></button>                
+                  <a href="{{ path('test_myself',{id : user.id})}}" class="btn-1 mt-5 btntest" role="button"><span>Testez votre joueur</span></a>              
                 </div>
                 
 
@@ -39,7 +39,7 @@
                     <h5 class="card-title"><a href="{{ path('history', {slug: user.slug}) }}">Voir ses Résultats</a></h5>
                     <ul class="list-group list-group-flush">
                     {% for result in user.results %}
-                      <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}}</li>
+                      <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}} <div class="badge">{% if result.status == 1 %} <span>Officiel</span> {% else %} <span>Personnel</span> {% endif %}</div></li>
                       {% endfor %}
                       
                     </ul>
@@ -103,7 +103,7 @@
 
                 <div class="card mb-5 col-xs-12 col-lg-4 buttoncard order-sm-2" style="width: 12rem;">                      
                   {# <button type = "button" class="btn-1 mt-5"><span>Passer un test</span></button> #} 
-                  <a href="{{ path('tests')}}" class="btn-1 mt-5 btntest" role="button"><span>Passer un test</span></a>               
+                  <a href="{{ path('test_myself',{id : user.id})}}" class="btn-1 mt-5 btntest" role="button"><span>Passer un test</span></a>               
                 </div> 
 
                 <div class="card mb-5 " style="width: 18rem;">
