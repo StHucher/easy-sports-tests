@@ -17,10 +17,13 @@ use App\Repository\TestRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Repository\RepositoryFactory;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -90,20 +93,14 @@ class CommonController extends AbstractController
     public function registerTest(UserRepository $user ,SessionInterface $session,TeamRepository $team,Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
     {   
         $result = new Result();
-        $teamsId = [];
-        $activities = $userInterface->getActivities();
-        foreach($activities as $activity){
-            $teamsId [] = $activity->getTeam()->getId();
+      
+        //dd($userInterface->getRoles());
+        if (in_array("ROLE_COACH", $userInterface->getRoles())) {
+            $form = $this->createForm(ResultType::class, $result);
+            $form->handleRequest($request);
         }
-        $listPlayersByTeam = [];
-        foreach($teamsId as $teamId){
-            $player = $activityRepository->findBy(['team'=>$teamId]);
-            $listPlayersByTeam[$teamId] = $player;
-        }
-        
 
-        $form = $this->createForm(ResultType::class, $result);
-        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $result->setTest($test);
             $result->setDoneAt( new DateTime('now'));
@@ -123,10 +120,42 @@ class CommonController extends AbstractController
         return $this->renderForm('common/one_test.html.twig', [
             'test' => $test,
             'form' => $form,
-            'activities'=>$activities,
-            'listPlayersByTeam'=>$listPlayersByTeam
         ]);
     }
 
     
+    /**
+     * @Route("/ajax/{id}", name="ajax")
+     *
+     * @return Response
+     */
+    public function ajax(UserRepository $userRepository, Request $request, $id) : Response
+    {
+
+        $patchole = "bidabidoubidouba";
+        //requete récupere tous les users de cette équipe par id
+
+
+    try {
+        return $this->json(
+                // les données à transformer en JSON
+                $patchole,
+                // HTTP STATUS CODE
+                200,
+                // HTTP headers supplémentaires, dans notre cas : aucune
+                [],
+                // Contexte de serialisation, les groups de propriété que l'on veux serialise
+        );
+
+     } catch (Exception $e){ // si une erreur est LANCE, je l'attrape
+        // je gère l'erreur
+        // par exemple si tu me file un genre ['3000'] qui n existe pas...
+         return new JsonResponse("Hoouuu !! Ce qui vient d'arriver est de votre faute : JSON invalide", Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+
+    }
+
+
+
 }
