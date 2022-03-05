@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Entity\Result;
 use App\Entity\Tag;
 use App\Entity\TagTest;
@@ -129,22 +130,34 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function ajax(UserRepository $userRepository, Request $request, $id) : Response
+    public function ajax(UserRepository $userRepository, ActivityRepository $activityRepository, Request $request, $id) : Response
     {
 
-        $patchole = "bidabidoubidouba";
+       // $patchole = "bidabidoubidouba";
         //requete récupere tous les users de cette équipe par id
+        $playersTeam = $activityRepository->findBy(['team' => $id]);
+        //$playersListTeam = $userRepository->findAll();
 
+        $playerList = [];
+        foreach ($playersTeam as $player) {
+            if ($player->getRole() == 0) { 
+                $playerList [] = $player->getUser();
+            }
+            
+        }
+
+        //dd($playerList);
 
     try {
         return $this->json(
                 // les données à transformer en JSON
-                $patchole,
+                $playerList,
                 // HTTP STATUS CODE
                 200,
                 // HTTP headers supplémentaires, dans notre cas : aucune
                 [],
                 // Contexte de serialisation, les groups de propriété que l'on veux serialise
+                ['groups' => ['show_users']]
         );
 
      } catch (Exception $e){ // si une erreur est LANCE, je l'attrape

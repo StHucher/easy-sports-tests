@@ -58,12 +58,23 @@ const app = {
             // On dispose désormais d'un tableau JS exploitable dans la variable data
             
             console.log(data);
+
+
+            //récupère l'element select avec les users
+             let selectCategoriesFilter = categoriesList.createSelectElement(data, 'Toutes les catégories', 'filter__choice');
+
+
+             const divSelectHeaderContent = document.getElementById('result');
+                    divSelectHeaderContent.append(selectCategoriesFilter);
+
+
+
+
         }); 
 
-/*             let selectCategoriesFilter = categoriesList.createSelectElement(data, 'Toutes les catégories', 'filter__choice');
+/*            
 
-            const divSelectHeaderContent = document.getElementById('header_categories');
-            divSelectHeaderContent.append(selectCategoriesFilter);
+            
 
 
             let selectCategories = categoriesList.createSelectElement(data, 'Toutes les catégories');
