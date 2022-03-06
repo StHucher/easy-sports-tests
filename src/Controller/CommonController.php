@@ -8,6 +8,7 @@ use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
 use App\Form\ResultType;
+use App\Form\UserType;
 use App\Repository\ActivityRepository;
 use App\Repository\ResultRepository;
 use App\Repository\TagRepository;

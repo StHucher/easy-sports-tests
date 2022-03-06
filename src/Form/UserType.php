@@ -10,11 +10,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -68,7 +70,22 @@ class UserType extends AbstractType
             ])
             ->add('status')
             ->add('slug')
-            ->add('picture')
+            ->add('picture', FileType::class,[
+                'label' => 'Ton avatar ou photo',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/jpg',
+                            'application/bmp',
+                        ],
+                        'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou bmp',
+                    ])
+                ],
+
+            ])
             ->add('city')
             ->add('club', EntityType::class,[
                 'class' => Club::class,
