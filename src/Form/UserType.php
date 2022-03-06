@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,17 +26,18 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom'
+            ] )
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('birthdate', TypeDateType::class,[
+                'label' => 'Date de naissance',
+                'years' => range(1950,2050)
+            ])
             ->add('email', EmailType::class, [
                 'required' => true,
-            ])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'Etes-vous ?',
-                'choices' => [
-                    'Joueur' => 'ROLE_PLAYER',
-                    'Entraineur' => 'ROLE_COACH'
-                ],
-                'multiple' => true,
-                'expanded' => true
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -58,18 +60,22 @@ class UserType extends AbstractType
                     ],
                 ])
             
-            ->add('firstname', TextType::class, [
-                'label' => 'Prénom'
-            ] )
-            ->add('lastname', TextType::class, [
-                'label' => 'Nom'
+            ->add('roles', ChoiceType::class, [
+                'label' => 'Etes-vous ?',
+                'choices' => [
+                    'Joueur' => 'ROLE_PLAYER',
+                    'Entraineur' => 'ROLE_COACH'
+                ],
+                'multiple' => true,
+                'expanded' => true
             ])
-            ->add('birthdate', TypeDateType::class,[
-                'label' => 'Date de naissance',
-                'years' => range(1950,2050)
-            ])
-            ->add('status')
-            ->add('slug')
+            
+            
+            
+             ->add('status', HiddenType::class, [
+                'data' => '1',
+                ])
+            /*->add('slug') */
             ->add('picture', FileType::class,[
                 'label' => 'Ton avatar ou photo',
                 'mapped' => false,
@@ -81,19 +87,19 @@ class UserType extends AbstractType
                             'application/jpg',
                             'application/png',
                         ],
-                        'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou bmp',
+                        'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou png',
                     ])
                 ],
 
             ])
-            ->add('city')
+            /* ->add('city')
             ->add('club', EntityType::class,[
                 'class' => Club::class,
                 'choice_label'=> 'name',
 
                 'multiple' => false,
                 'expanded' => true,
-            ])
+            ]) */
         ;
     }
 
