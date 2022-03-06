@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CommonController extends AbstractController
 {
@@ -118,9 +119,9 @@ class CommonController extends AbstractController
      *
      * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
      */
-    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger)
+    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger, UserInterface $userInterface)
     {
-        
+        $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -153,13 +154,14 @@ class CommonController extends AbstractController
                 }
 
                 // We update the user class
-                $user->setpicture($newFilename);
+                $user->setPicture($newFilename);
             }
-
+            $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.');
 
-            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.');
+            /* $UserRepository->add($user); */
+            return $this->redirectToRoute('user_home', [/* 'slug'=>$userInterface->getSlug() */], Response::HTTP_SEE_OTHER);
         }
 
         /*display the form*/

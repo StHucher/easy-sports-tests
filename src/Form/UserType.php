@@ -79,7 +79,7 @@ class UserType extends AbstractType
                         'maxSize' => '1024k',
                         'mimeTypes' => [
                             'application/jpg',
-                            'application/bmp',
+                            'application/png',
                         ],
                         'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou bmp',
                     ])
