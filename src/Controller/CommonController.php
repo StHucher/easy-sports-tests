@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -117,19 +118,42 @@ class CommonController extends AbstractController
      *
      * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
      */
-    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder)
+    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger)
     {
         
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-
+            //Is there a new password ?
             if($form-> get('password')->getData()){
-                // Si oui, on hache le nouveau mot de passe
+                // if yes, we hashe the new password
                 $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
-                // On écrase le mot de passe en clair par le mot de passe haché
+                // we set the new password
                 $user->setPassword($hashedPassword);
+            }
+
+            $avatarFile = $form->get('picture')->getData();
+            //If there is there some data in the field picture, we treat them
+            if($avatarFile){
+                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+
+                // Move the file to the directory where avatars are stored
+                try {
+                    $avatarFile->move(
+                        $this->getParameter('avatar_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... TO DO handle exception if something happens during file upload
+                }
+
+                // We update the user class
+                $user->setpicture($newFilename);
             }
 
             $entityManager->flush();
