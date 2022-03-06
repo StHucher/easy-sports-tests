@@ -56,36 +56,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /**
-     * Function editUser
-     *
-     * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
-     */
-    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder)
-    {
-        
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()){
-
-            /* if($form-> get('password')->getData()){
-                $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
-            } */
-
-            $entityManager->flush();
-            /* $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.'); */
-
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-        }
-
-        /*display the form*/
-        return $this->renderForm('home/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-
-    }
+    
 
     /**
      * @Route("/contact", name="contactpage")

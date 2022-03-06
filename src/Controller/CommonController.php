@@ -23,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -107,10 +108,41 @@ class CommonController extends AbstractController
 
             return $this->redirectToRoute('user_home',['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
-        return $this->renderForm('common/one_test.html.twig', [
-            'test' => $test,
+        
+    }
+
+    /**
+     * Function editUser
+     *
+     * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
+     */
+    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder)
+    {
+        
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            if($form-> get('password')->getData()){
+                // Si oui, on hache le nouveau mot de passe
+                $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
+                // On écrase le mot de passe en clair par le mot de passe haché
+                $user->setPassword($hashedPassword);
+            }
+
+            $entityManager->flush();
+            $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.');
+
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
+
+        /*display the form*/
+        return $this->renderForm('home/edit.html.twig', [
+            'user' => $user,
             'form' => $form,
         ]);
+
     }
 
     
