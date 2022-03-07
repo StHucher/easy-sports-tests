@@ -10,11 +10,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType as TypeDateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,17 +26,18 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom'
+            ] )
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('birthdate', TypeDateType::class,[
+                'label' => 'Date de naissance',
+                'years' => range(1950,2050)
+            ])
             ->add('email', EmailType::class, [
                 'required' => true,
-            ])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'Etes-vous ?',
-                'choices' => [
-                    'Joueur' => 'ROLE_PLAYER',
-                    'Entraineur' => 'ROLE_COACH'
-                ],
-                'multiple' => true,
-                'expanded' => true
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -56,20 +60,39 @@ class UserType extends AbstractType
                     ],
                 ])
             
-            ->add('firstname', TextType::class, [
-                'label' => 'Prénom'
-            ] )
-            ->add('lastname', TextType::class, [
-                'label' => 'Nom'
+            ->add('roles', ChoiceType::class, [
+                'label' => 'Etes-vous ?',
+                'choices' => [
+                    'Joueur' => 'ROLE_PLAYER',
+                    'Entraineur' => 'ROLE_COACH'
+                ],
+                'multiple' => true,
+                'expanded' => true
             ])
-            ->add('birthdate', TypeDateType::class,[
-                'label' => 'Date de naissance',
-                'years' => range(1950,2050)
+            
+            
+            
+             ->add('status', HiddenType::class, [
+                'data' => '1',
+                ])
+            /*->add('slug') */
+            ->add('picture', FileType::class,[
+                'label' => 'Ton avatar ou photo',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/jpg',
+                            'application/png',
+                        ],
+                        'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou png',
+                    ])
+                ],
+
             ])
-            /* ->add('status')
-            ->add('slug')
-            ->add('picture')
-            ->add('city')
+            /* ->add('city')
             ->add('club', EntityType::class,[
                 'class' => Club::class,
                 'choice_label'=> 'name',

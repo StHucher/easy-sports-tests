@@ -8,6 +8,7 @@ use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
 use App\Form\ResultType;
+use App\Form\UserType;
 use App\Repository\ActivityRepository;
 use App\Repository\ResultRepository;
 use App\Repository\TagRepository;
@@ -21,10 +22,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CommonController extends AbstractController
 {
@@ -88,27 +92,14 @@ class CommonController extends AbstractController
      * @return Response
      */
     public function registerTest(UserRepository $user ,SessionInterface $session,TeamRepository $team,Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
-    {   
+    {       
         $result = new Result();
-        $teamsId = [];
-        $activities = $userInterface->getActivities();
-        foreach($activities as $activity){
-            $teamsId [] = $activity->getTeam()->getId();
-        }
-        $listPlayersByTeam = [];
-        foreach($teamsId as $teamId){
-            $player = $activityRepository->findBy(['team'=>$teamId]);
-            $listPlayersByTeam[$teamId] = $player;
-        }
-        
-
         $form = $this->createForm(ResultType::class, $result);
+        
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $result->setTest($test);
             $result->setDoneAt( new DateTime('now'));
-            $u = $user->findBy(['id'=>$session->get('player')]);
-            $result->setUser($u[0]);
             if(in_array("ROLE_COACH",$userInterface->getRoles())){
                 $result->setStatus(1);
             }else{
@@ -120,12 +111,65 @@ class CommonController extends AbstractController
 
             return $this->redirectToRoute('user_home',['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
-        return $this->renderForm('common/one_test.html.twig', [
-            'test' => $test,
+        
+    }
+
+    /**
+     * Function editUser
+     *
+     * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
+     */
+    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger, UserInterface $userInterface)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            //Is there a new password ?
+            if($form-> get('password')->getData()){
+                // if yes, we hashe the new password
+                $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
+                // we set the new password
+                $user->setPassword($hashedPassword);
+            }
+
+            $avatarFile = $form->get('picture')->getData();
+            //If there is there some data in the field picture, we treat them
+            if($avatarFile){
+                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+
+                // Move the file to the directory where avatars are stored
+                try {
+                    $avatarFile->move(
+                        $this->getParameter('avatar_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... TO DO handle exception if something happens during file upload
+                }
+
+                // We update the user class
+                $user->setPicture($newFilename);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.');
+            /* $UserRepository->add($user); */
+            return $this->redirectToRoute('user_home', [/* 'slug'=>$userInterface->getSlug() */], Response::HTTP_SEE_OTHER);
+        }
+
+        /*display the form*/
+        return $this->renderForm('home/edit.html.twig', [
+            'user' => $user,
             'form' => $form,
-            'activities'=>$activities,
-            'listPlayersByTeam'=>$listPlayersByTeam
         ]);
+
     }
 
     

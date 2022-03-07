@@ -2,12 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Result;
+use App\Entity\Team;
 use App\Entity\User;
+use App\Form\ResultType;
 use App\Repository\ActivityRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -84,8 +91,43 @@ class CoachController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/teams/{id}/tests", name="test_team", methods={"GET","POST"}, requirements={"id"="\d+"})
+     */
+    public function testByTeam(int $id,Team $team, ActivityRepository $activityRepository, EntityManagerInterface $manager,UserRepository $user, Request $request, SessionInterface $session, UserInterface $userInterface)
+    {   
+        $result = new Result();
+        $players = $activityRepository->findBy(['team'=>$id]);
+        $form = $this->createForm(ResultType::class, $result);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $result->setTest($test);
+            $result->setDoneAt( new DateTime('now'));
+            $u = $user->findBy(['id'=>$session->get('player')]);
+            $result->setUser($u[0]);
+            if(in_array("ROLE_COACH",$userInterface->getRoles())){
+                $result->setStatus(1);
+            }else{
+                $result->setStatus(0);
+            }
+            
+            $manager->persist($result);
+            $manager->flush();
 
-
-
-
+            return $this->redirectToRoute('user_home',['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+        return $this->renderForm('common/test_team.html.twig', [
+            // 'test' => $test,
+            'form' => $form,
+            'players'=>$players,
+            'team'=>$team
+        ]);
+    }
+       
 }
+
+
+
+
+
+
