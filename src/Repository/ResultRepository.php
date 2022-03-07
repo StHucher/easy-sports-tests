@@ -45,6 +45,17 @@ class ResultRepository extends ServiceEntityRepository
         }
     }
 
+    public function oneResultperTest($test, $user)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.user ='.$user)
+            ->andWhere('r.test ='.$test)
+            // ->orderBy('r.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Result[] Returns an array of Result objects
     //  */

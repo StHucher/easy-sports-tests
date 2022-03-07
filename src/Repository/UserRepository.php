@@ -80,6 +80,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
+    public function getUsersAndTeamByTeamId($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u','team.name')
+            ->innerJoin('App\Entity\Activity', 'activity', 'WITH', 'u.id = activity.user')
+            ->innerJoin('App\Entity\Team', 'team', 'WITH', 'activity.team = team.id')
+            ->where('team.id =:id')
+            ->setParameter('id', $id)
+            // ->orderBy('team.id', 'ASC')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+        ;
+    }
+
+
     
     // /**
     //  * @return User[] Returns an array of User objects

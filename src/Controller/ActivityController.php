@@ -30,9 +30,9 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/new/{id}", name="app_activity_new", methods={"GET", "POST"})
+     * @Route("/new/", name="app_activity_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ActivityRepository $activityRepository, TeamRepository $team, $id): Response
+    public function new(Request $request, ActivityRepository $activityRepository, TeamRepository $team): Response
     {
         $activity = new Activity();
         $form = $this->createForm(ActivityType::class, $activity);

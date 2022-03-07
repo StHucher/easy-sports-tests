@@ -47,6 +47,11 @@
                   <li class="nav-item">
                     <a class="nav-link text-light" href="{{path('history', {slug : app.user.slug})}}">Mes résultats</a>
                   </li>
+                  {% if 'ROLE_COACH' in app.user.roles %}
+                  <li class="nav-item">
+                    <a class="nav-link text-light" href="{{path('teams_history')}}">Résultats de mes équipes</a>
+                  </li>
+                  {% endif %}
                   <li class="nav-item">
                     <a class="nav-link text-light" href="{{path('coach_teams', {id : app.user.id})}}">Mon équipe</a>
                   </li>
