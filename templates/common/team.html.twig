@@ -15,7 +15,7 @@
                 {% if "ROLE_COACH" in user.roles %}
                 <div class="col-12 col-sm-6"> 
                     <h4 class="mb-4">Bienvenue dans la section Equipes</h4>
-                    <p>Pour profiter de cette section veuillez créer votre première équipes</p>
+                    <p>Pour profiter pleinement de cette section veuillez créer votre première équipes</p>
                 </div>
                 <div class="col-12 col-sm-6">
                     <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
@@ -24,7 +24,7 @@
                 {% else %}
                     <div class="col-12 col-sm-6"> 
                     <h4 class="mb-4">Bienvenue dans la section Equipes</h4>
-                    <p>Aucun entraîneur ne t'a ajouté à son équipe pour le moment.</p>
+                    <p>Désolé, aucun entraîneur ne t'a ajouté à son équipe pour le moment.</p>
                 </div>
                 {% endif %}
 
