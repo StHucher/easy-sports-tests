@@ -64,7 +64,6 @@ class TeamController extends AbstractController
            
             $doctrine->flush(); 
 
-            
             return $this->redirectToRoute('coach_teams', [], Response::HTTP_SEE_OTHER);
         }
 
