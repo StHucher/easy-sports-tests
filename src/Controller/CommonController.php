@@ -130,16 +130,17 @@ class CommonController extends AbstractController
      *
      * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
      */
-    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger, UserInterface $userInterface)
+    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, SluggerInterface $slugger, UserInterface $userInterface)
     {
         $user = $this->getUser();
-        $actualPassword=$user->getPassword();
+        
+         
         $form = $this->createForm(EditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
 
-
+            
             $avatarFile = $form->get('picture')->getData();
             //If there is there some data in the field picture, we treat them
             if($avatarFile){
@@ -152,12 +153,15 @@ class CommonController extends AbstractController
                 // Move the file to the directory where avatars are stored
                 try {
                     $avatarFile->move(
-                        $this->getParameter('avatar_directory'),
+                        $this->getParameter('uploads_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                     // ... TO DO handle exception if something happens during file upload
                 }
+                $user->setPicture(
+                    new File($this->getParameter('uploads_directory').'/'.$user->getPicture())
+                );
 
                 // We update the user class
                 $user->setPicture($newFilename);

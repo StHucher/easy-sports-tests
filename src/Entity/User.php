@@ -67,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true,)
      * @Assert\File(
      *     maxSize = "1024k",
      *     mimeTypes = {"application/jpg", "application/png"},
