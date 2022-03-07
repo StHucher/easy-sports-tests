@@ -83,7 +83,7 @@ class UserType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
-                    new Image([
+                    new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
                             'application/jpg',

@@ -35,6 +35,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class CommonController extends AbstractController
 {
@@ -130,7 +131,7 @@ class CommonController extends AbstractController
      */
     public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger, UserInterface $userInterface)
     {
-        $user = $this->getUser();
+        /* $user = $this->getUser(); */
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -161,7 +162,7 @@ class CommonController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.');
+            $this->addFlash('success', 'Votre compte vient d\'être modifié avec succès.');
             /* $UserRepository->add($user); */
             return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
