@@ -92,14 +92,14 @@
                                             <p class="card-text text-center">
                                                 <a href="{{path('user_home', {slug : player.user.slug})}}">{{ player.user.firstname}}</a>
                                             </p>
-                                            <p class="card-text text-center">
+                                            <div class="text-center">
                                                 <form method="post" action="{{ path('app_team_delete_player_from_team', {'id': player.id}) }}" onsubmit="return confirm('Veux tu supprimer {{ player.user.firstname }} {{ player.user.lastname }} de cette équipe ?');">
                                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ player.id) }}">
-                                                    <a class="btn"><img src="{{ asset('assets/icones/trash_bin_icon-icons.com_67981.svg') }}" style="width:1.7rem" alt="image de poubelle"></a>
+                                                    <button class="btn"><img src="{{ asset('assets/icones/trash_bin_icon-icons.com_67981.svg') }}" style="width:1.7rem" alt="image de poubelle"></button>
                                                 </form>                     
-                                            
+                                            </div>
                                                 
-                                            </p>
+                                          
                                         </div>
                                     </div>
                                 </div>                    
