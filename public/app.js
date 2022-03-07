@@ -1,37 +1,63 @@
 const app = {
     init:function()
     {
-    //    const select = document.getElementById('teamSelect');
-    //    select.addEventListener('change',app.handleChange);
-       const form = document.getElementById('form-team');
-       form.addEventListener('submit',app.handleSubmit);
-       const formPlayer = document.getElementById('form-player');
-       formPlayer.addEventListener('submit',app.handleSubmitPlayer);
+        const selectTeam = document.getElementById('result_team');
+        selectTeam.addEventListener('change',app.handleChangeTeam);
+        const userSelect = document.getElementById('result_user');
+        userSelect.addEventListener('change',app.handleChangeUser);
 
     },
 
-    // handleChange:function(evt)
-    // {   
-    //     console.log('dans le if');
-    //     const form = document.getElementById('form-team');
-    //     form.submit();
-    // },
-
-    handleSubmit:function(evt)
+    handleChangeTeam:function(evt)
     {   
-        console.log('submit');
-        // const form = document.getElementById('form-team');
-        // const post = form.value;
-        // console.log(post);
-        // evt.preventDefault();
+        const userSelect = document.getElementById('result_user');
+        userSelect.innerHTML = '<option>Choisissez un joueur</option>'
+        let none = document.querySelectorAll('.d-none');
+        const idTeam = document.getElementById('result_team').value;
+        console.log(idTeam);
+        let fetchOptions = {
+            method: 'GET',
+            mode:   'cors',
+            cache:  'no-cache'
+        };
+        fetch('http://localhost:8080/teamFromResult/' + idTeam, fetchOptions)
+            .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        }).then(function (data) {
+            console.log(data);
+            for(key in data){
+                let d = data[key];
+                console.log(d);
+                let option = document.createElement('option');
+                option.value = d.id;
+                option.text = d.firstname;
+                userSelect.append(option);
+            }
+            
+            
+            
+        }).catch(function (error) {
+            console.log("le message d'erreur", error);
+        });
+            
+        userSelect.classList.remove('d-none');
+        const label = document.querySelector('.user_label')
+        label.classList.remove('d-none')
     },
 
-    handleSubmitPlayer:function(evt)
+    handleChangeUser:function(evt)
     {
-        console.log('submit');
-        // evt.preventDefault();
+        const resultSelect = document.getElementById('result_result');
+        resultSelect.classList.remove('d-none');
+        const label = document.querySelector('.result_label')
+        label.classList.remove('d-none')
     }
+    
 
+    
 
 }
 

@@ -7,6 +7,9 @@ use App\Entity\Tag;
 use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
+use App\Form\PlayersByTeam;
+use App\Form\PlayersTeamType;
+use App\Form\ResultCurrentUserType;
 use App\Form\ResultType;
 use App\Form\UserType;
 use App\Repository\ActivityRepository;
@@ -18,15 +21,18 @@ use App\Repository\TestRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -170,6 +176,71 @@ class CommonController extends AbstractController
             'form' => $form,
         ]);
 
+    }
+
+    /**
+     * @Route("/teamFromResult/{id}", name="team_result", methods={"GET","POST"})
+     *
+     * @return void
+     */
+    public function TeamFromResult(Request $request,ActivityRepository $activityRepository)
+    {      
+        $id = $request->attributes->get('id');
+        $players = $activityRepository->findBy(['team' => $id]);
+        foreach($players as $player){
+            $data [] = $player->getUser();
+            
+        }
+        try {
+            return $this->json(
+                    // les données à transformer en JSON
+                    $data,
+                    // HTTP STATUS CODE
+                    200,
+                    // HTTP headers supplémentaires, dans notre cas : aucune
+                    [],
+                    // Contexte de serialisation, les groups de propriété que l'on veux serialise
+                    ['groups' => ['show_users']]
+            );
+    
+         } catch (Exception $e){ // si une erreur est LANCE, je l'attrape
+            // je gère l'erreur
+            // par exemple si tu me file un genre ['3000'] qui n existe pas...
+             return new JsonResponse("Hoouuu !! Ce qui vient d'arriver est de votre faute : JSON invalide", Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    /**
+     * @Route("/testmyself/{id}", name="test_myself", methods= {"GET","POST"}, requirements={"id" = "\d+"})
+     *
+     * @param Request $request
+     * @param UserInterface $userInterface
+     * @param EntityManagerInterface $manager
+     * @return void
+     */
+    public function ResultCurrentUser(User $user,Request $request, UserInterface $userInterface, EntityManagerInterface $manager)
+    {
+        $result = new Result();
+        $form = $this->createForm(ResultCurrentUserType::class, $result);
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $result->setDoneAt( new DateTime('now'));
+            $result->setUser($user);
+            if(in_array("ROLE_COACH",$userInterface->getRoles())){
+                $result->setStatus(1);
+            }else{
+                $result->setStatus(0);
+            }
+            
+            $manager->persist($result);
+            $manager->flush();
+
+            return $this->redirectToRoute('history',['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+        return $this->renderForm('common/currentUserTest.html.twig', [
+            'form' => $form,
+        ]);
     }
 
     
