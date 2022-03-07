@@ -4,6 +4,7 @@
 
 {% block body %}
     <h3>Modifiez votre profil</h3>
+{{ form_start(form) }}
 
     <div class="d-flex flex-row text-start align-items">
         <div class="col-md-3 m-3">
@@ -46,6 +47,6 @@
     <div class = "text-center mx-3">
     <button class="btn btn-success btn-lg my-5 " >{{ button_label|default('Enregistrer') }}</button>
 </div>
-
+{{ form_end(form) }}
     <a href="{{ path('homepage') }}">retour à l'accueil</a>
 {% endblock %}
