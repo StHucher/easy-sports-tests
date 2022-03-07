@@ -22,8 +22,9 @@
         </div>
         </div>
 
-    {# Sinon l'entraineur à au moins créé une équipe #}
-    {% elseif "ROLE_COACH" in user.roles %}
+    {# Sinon l'entraineur à au moins créé une équipe #} 
+    {#ou le joueur à une équipe !!! #}
+    {% else %}
         <div class="d-flex flex-row-reverse">
 
             <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
@@ -43,10 +44,11 @@
                     {# S'il n'y a pas que l'entraineur dans cette équipe on peut faire passer un test #}
                     {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
                     
+ 
                         <a href="{{ path('test_team', {id : team.team.id})}}" class="btn-1 mt-5 btntest" role="button"><span>Testez cette Equipe</span></a>
-                       
+        
                         <a href="{{ path('app_activity_new', {id : team.team.id}) }}" class="btn-1 mt-5 btntest" role="button">Ajouter un joueur</a>
-                        
+         
                   
                     {# Sinon il faut ajouter des joueurs #}      
                     {% else %}
