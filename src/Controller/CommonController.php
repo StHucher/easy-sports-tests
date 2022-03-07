@@ -135,13 +135,6 @@ class CommonController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            //Is there a new password ?
-            if($form-> get('password')->getData()){
-                // if yes, we hashe the new password
-                $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
-                // we set the new password
-                $user->setPassword($hashedPassword);
-            }
 
             $avatarFile = $form->get('picture')->getData();
             //If there is there some data in the field picture, we treat them
@@ -179,6 +172,44 @@ class CommonController extends AbstractController
             'form' => $form,
         ]);
 
+    }
+
+    /**
+     * Function editPassword
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param User $user
+     * @param UserPasswordHasherInterface $encoder
+     * @param UserInterface $userInterface
+     * @return void
+     * @Route("/{slug}/profil/password", name ="editpassword", methods = {"GET", "POST"})
+     */
+    public function editPassword(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, UserInterface $userInterface)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Is there a new password ?
+            if ($form-> get('password')->getData()) {
+                // if yes, we hashe the new password
+                $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
+                // we set the new password
+                $user->setPassword($hashedPassword);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('info', 'Le mot de passe vient d\'être modifié avec succès.');
+            return $this->redirectToRoute('profilpage', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+        /*display the form*/
+        return $this->renderForm('home/password.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
     }
 
     /**
