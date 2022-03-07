@@ -104,6 +104,20 @@ class TeamController extends AbstractController
         ]);
     }
 
+    /** Delete player from my team
+     * @Route("/delete/{id}", name="app_team_delete_player_from_team", methods={"POST"})
+     */
+    public function deletePlayerFromTeam(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
+    {
+
+        // !!! Formulaire delete dans le twig !!!
+        if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
+            $activityRepository->remove($activity);
+        }
+  
+        return $this->redirectToRoute('coach_teams', [], Response::HTTP_SEE_OTHER);
+    }
+
     /**
      * @Route("/{id}", name="app_team_delete", methods={"POST"})
      */
