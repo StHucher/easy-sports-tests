@@ -170,7 +170,7 @@ class CommonController extends AbstractController
 
             $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.');
             /* $UserRepository->add($user); */
-            return $this->redirectToRoute('user_home', [/* 'slug'=>$userInterface->getSlug() */], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         /*display the form*/
