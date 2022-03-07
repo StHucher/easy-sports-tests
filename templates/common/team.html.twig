@@ -10,24 +10,36 @@
     {# Si l'entraineur n'a pas encore créé d'équipe il doit le faire #}
     {% if teamPlayersListByTeam[0] is not defined %}
         <div class="container">
-        <div class="row text-center">
-          <div class="col-12 col-sm-6"> 
-            <h4>Bienvenue dans la section Equipes</h4>
-            <p>Pour profiter de cette section veuillez créer votre première équipes</p>
-          </div>
-          <div class="col-12 col-sm-6">
+            <div class="row text-center">
 
-            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
-          </div>
-        </div>
+                {% if "ROLE_COACH" in user.roles %}
+                <div class="col-12 col-sm-6"> 
+                    <h4 class="mb-4">Bienvenue dans la section Equipes</h4>
+                    <p>Pour profiter de cette section veuillez créer votre première équipes</p>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
+                </div>
+
+                {% else %}
+                    <div class="col-12 col-sm-6"> 
+                    <h4 class="mb-4">Bienvenue dans la section Equipes</h4>
+                    <p>Aucun entraîneur ne t'a ajouté à son équipe pour le moment.</p>
+                </div>
+                {% endif %}
+
+            </div>
         </div>
 
-    {# Sinon l'entraineur à au moins créé une équipe #}
-    {% elseif "ROLE_COACH" in user.roles %}
-        <div class="d-flex flex-row-reverse">
+    {# Sinon l'entraineur à au moins créé une équipe #} 
+    {#ou le joueur à une équipe !!! #}
+    {% else %}
+        {% if "ROLE_COACH" in user.roles %}
+            <div class="d-flex flex-row-reverse">
 
-            <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
-        </div>
+                <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
+            </div>
+        {% endif %}
         {# On créé une variable d'incrément qui correspond à la position de l'équipe dans le tableau #}
         {# exemples: teamPlayersListByTeam[0] , teamPlayersListByTeam[1] #}
         {% set numberoOfTeam = 0 %}
@@ -35,23 +47,23 @@
         {# myTeams correspond aux lignes du coach dans la table activity #}
         {% for team in myTeams %}
 
-            {# on ne garde que les lignes pour lesquelles l'entraîneur est coach et non joueur #}
-            {# {% if team.role == 1  %} #}
-
                 <div class="container_team">
 
-                    {# S'il n'y a pas que l'entraineur dans cette équipe on peut faire passer un test #}
-                    {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
-                    
-                        <a href="{{ path('test_team', {id : team.team.id})}}" class="btn-1 mt-5 btntest" role="button"><span>Testez cette Equipe</span></a>
-                        {# <a href="{{ path('/coach/teams/{id}/tests', {id : team.id}) }}" type="button" class="btn btn-success">Ajouter un joueur</a> #}
-                        
-                  
-                    {# Sinon il faut ajouter des joueurs #}      
-                    {% else %}
-                            <a href="{{ asset('coach/activity/new/'~team.team.id) }}" type="button" class="btn btn-success">Ajouter des joueurs avant de pouvoir faire un test</a>
-                    {% endif %}
+                    {# on ne garde que les lignes pour lesquelles l'entraîneur est coach et non joueur #}
+                    {# {% if team.role == 1  %} #}
+                    {% if team.role == 1 %}
 
+                        {# S'il n'y a pas que l'entraineur dans cette équipe alors on peut faire passer un test #}
+                        {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
+                        
+                            <a href="{{ path('test_team', {id : team.team.id})}}" class="btn-1 mt-5 btntest" role="button"><span>Testez cette Equipe</span></a>
+                            <a href="{{ asset('coach/activity/new/'~team.team.id) }}" class="btn-1 mt-5 btntest" role="button">Ajouter un joueur</a>
+                             
+                        {# Sinon il faut ajouter des joueurs #}      
+                        {% else %}
+                                <a href="{{ asset('coach/activity/new/'~team.team.id) }}" type="button" class="btn btn-success">Ajouter des joueurs avant de pouvoir faire un test</a>
+                        {% endif %}
+                    {% endif %}
 
                     {# team dans la table activity fait le lien avec les tables team et user (team.name ou encore team.user) #}
                     <div class="team_name">
@@ -84,7 +96,7 @@
                             {% endif %}
 
                         {% endfor %}
-
+               
                 </div>
                 {# Incrémente uniquement si tu es dans la boucle entraineur == 1 #}
                 {% set numberoOfTeam = numberoOfTeam + 1 %} 
