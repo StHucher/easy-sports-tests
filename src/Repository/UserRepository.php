@@ -62,6 +62,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function createPlayerFromMyTeamsQueryBuilder($user)
+    {
+        $teamActivities = $user->getActivities();
+        $teamId = [];
+        foreach($teamActivities as $activity){
+            $team = $activity->getTeam()->getId();
+            $teamId [] = $team;
+
+        }
+        foreach ($teamId as $id) {
+            return $this->createQueryBuilder('u')
+            ->select('u')
+            ->innerJoin('App\Entity\Activity', 'activity', 'WITH', 'u.id = activity.user')
+            ->innerJoin('App\Entity\Team', 'team', 'WITH', 'activity.team = team.id')
+            ->where('team.id ='.$id);
+        }
+    }
+
+    
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

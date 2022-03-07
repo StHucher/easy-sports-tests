@@ -4,27 +4,14 @@
 
 {% block body %}
 <div class="container">
-<<<<<<< HEAD
-    <h1 class="text-center">{{test.name}} (en {{test.unit}})</h1>
-        <p>Description du test : {{test.description}}</p>
-
-   
-
-    {{ include('common/_form.html.twig') }}
-
-    {% if id is defined %}
-    'bibobob'{{  id}}
-    {% endif %}
-=======
      <h1 class="text-center"></h1>
         
 
    
      {{ include('common/_form.html.twig') }}
->>>>>>> main
     <a href="{{ path('user_home', {slug : app.user.slug}) }}">retour à l'accueil</a>
 
 
 
-    </div>
+    </div
 {% endblock %}

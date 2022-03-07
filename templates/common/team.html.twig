@@ -23,13 +23,11 @@
         </div>
 
     {# Sinon l'entraineur à au moins créé une équipe #}
-    {% else %}
-    {% if "ROLE_COACH" in user.roles %}
+    {% elseif "ROLE_COACH" in user.roles %}
         <div class="d-flex flex-row-reverse">
 
             <a href="{{ path('app_team_new')}}" class="btn-1 mt-5 btntest" role="button">Ajouter une équipe</a>
         </div>
-    {% endif %}
         {# On créé une variable d'incrément qui correspond à la position de l'équipe dans le tableau #}
         {# exemples: teamPlayersListByTeam[0] , teamPlayersListByTeam[1] #}
         {% set numberoOfTeam = 0 %}
@@ -45,8 +43,8 @@
                     {# S'il n'y a pas que l'entraineur dans cette équipe on peut faire passer un test #}
                     {% if teamPlayersListByTeam[numberoOfTeam] | length > 1 %}
                     
-                        <button type="button" class="btn btn-success d-flex">Testez cette équipe</button>
-                        <a href="{{ asset('coach/activity/new/'~team.team.id) }}" type="button" class="btn btn-success">Ajouter un joueur</a>
+                        <a href="{{ path('test_team', {id : team.team.id})}}" class="btn-1 mt-5 btntest" role="button"><span>Testez cette Equipe</span></a>
+                        {# <a href="{{ path('/coach/teams/{id}/tests', {id : team.id}) }}" type="button" class="btn btn-success">Ajouter un joueur</a> #}
                         
                   
                     {# Sinon il faut ajouter des joueurs #}      
@@ -55,13 +53,11 @@
                     {% endif %}
 
 
-
                     {# team dans la table activity fait le lien avec les tables team et user (team.name ou encore team.user) #}
                     <div class="team_name">
                     <h3>  {{ team.team.name }} - {{ team.team.ageCategory }}  </h3>
                     <h5>{{ team.user.firstname }} {{ team.user.lastname }}</h5>
                     </div>
-
                         {# teamPlayersListByTeam[numberoOfTeam] représente les tableaux qui contiennent les joueurs  #}
                         {% for player in teamPlayersListByTeam[numberoOfTeam] %}
 
@@ -92,7 +88,6 @@
                 </div>
                 {# Incrémente uniquement si tu es dans la boucle entraineur == 1 #}
                 {% set numberoOfTeam = numberoOfTeam + 1 %} 
-        
         {% endfor %}
     {% endif %}
 </div>
