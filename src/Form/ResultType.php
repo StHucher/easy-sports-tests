@@ -26,6 +26,7 @@ class ResultType extends AbstractType
     {   
         $user = $this->security->getUser();
         $builder
+
         ->add('team', EntityType::class,[
             'class'=>Team::class,
             'choice_label' => 'name',

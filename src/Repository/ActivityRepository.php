@@ -46,6 +46,25 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
 
+<<<<<<< HEAD
+/*     public function createPlayerFromMyTeamsQueryBuilder($user)
+    {
+        $teamActivities = $user->getActivities();
+        $teamId = [];
+        foreach($teamActivities as $activity){
+            $team = $activity->getTeam()->getId();
+            $teamId [] = $team;
+
+        }
+        foreach ($teamId as $id) {
+            return $this->createQueryBuilder('u')
+            ->select('u')
+            ->innerJoin('App\Entity\Activity', 'activity', 'WITH', 'u.id = activity.user')
+            ->innerJoin('App\Entity\Team', 'team', 'WITH', 'activity.team = team.id')
+            ->where('team.id ='.$id);
+        }
+    } */
+=======
     public function createTeamFromUserQueryBuilder($user)
     {   
         $userId =$user->getId();
@@ -62,6 +81,7 @@ class ActivityRepository extends ServiceEntityRepository
             ->where('a.user ='.$userId);
         // }
     }
+>>>>>>> main
 
 
     // /**

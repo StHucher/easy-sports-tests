@@ -34,7 +34,6 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
             /*When you create a new user I fix the status to 1 (active) and define the slug*/
             $user->setStatus(1);
             $user->setSlug('test');
