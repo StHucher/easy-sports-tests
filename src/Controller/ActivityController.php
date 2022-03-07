@@ -48,7 +48,7 @@ class ActivityController extends AbstractController
  
             $activityRepository->add($activity);
     
-            return $this->redirectToRoute('coach_teams', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('coach_teams');
         }
 
         return $this->renderForm('activity/new.html.twig', [
