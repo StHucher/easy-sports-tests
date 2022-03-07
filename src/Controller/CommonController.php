@@ -187,7 +187,7 @@ class CommonController extends AbstractController
      */
     public function editPassword(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, UserInterface $userInterface)
     {
-        $user = $this->getUser();
+        /* $user = $this->getUser(); */
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -198,11 +198,12 @@ class CommonController extends AbstractController
                 $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
                 // we set the new password
                 $user->setPassword($hashedPassword);
+
+                $this->addFlash('success', 'Le mot de passe vient d\'être modifié avec succès.');
             }
-            $entityManager->persist($user);
+            /* $entityManager->persist($user); */
             $entityManager->flush();
 
-            $this->addFlash('info', 'Le mot de passe vient d\'être modifié avec succès.');
             return $this->redirectToRoute('profilpage', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
         /*display the form*/
