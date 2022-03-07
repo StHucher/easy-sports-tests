@@ -8,6 +8,10 @@ use App\Entity\User;
 use App\Repository\TeamRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+<<<<<<< HEAD
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+=======
+>>>>>>> main
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +30,24 @@ class ResultType extends AbstractType
     {   
         $user = $this->security->getUser();
         $builder
+<<<<<<< HEAD
+        ->add('team', EntityType::class, [
+            'class'=>Team::class,
+            'choice_label' => 'name',
+            'mapped' => false,
+            'placeholder' => 'Choisissez une équipe',
+            # querybuilder pour ne sélectionner que les équipes dont l'utilisateur est coach
+        ])
+        ->add('user', EntityType::class, [
+            'class'=>User::class,
+            'choice_label' => 'firstname',
+            'label_attr' => array('class' => 'd-none'), # grâce à BS
+            'attr' => array('class'=>'d-none')
+        ])
+        ->add('result', TextType::class, [
+            'label' => 'Résultat',
+            'label_attr' => array('class' => 'd-none'),
+=======
         ->add('team', EntityType::class,[
             'class'=>Team::class,
             'choice_label' => 'name',
@@ -46,6 +68,7 @@ class ResultType extends AbstractType
         ->add('result', TextType::class,[
             'label' => 'Résultat',
             'label_attr' => array('class' => 'd-none result_label'),
+>>>>>>> main
             'attr' => array('class'=>'d-none')
         ]);
     }

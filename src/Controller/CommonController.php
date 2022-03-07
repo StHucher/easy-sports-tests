@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Entity\Result;
 use App\Entity\Tag;
 use App\Entity\TagTest;
@@ -21,13 +22,20 @@ use App\Repository\TestRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+<<<<<<< HEAD
+use Doctrine\ORM\Repository\RepositoryFactory;
+=======
+>>>>>>> main
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+<<<<<<< HEAD
+=======
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+>>>>>>> main
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -100,9 +108,20 @@ class CommonController extends AbstractController
     public function registerTest(UserRepository $user ,SessionInterface $session,TeamRepository $team,Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
     {       
         $result = new Result();
+<<<<<<< HEAD
+      
+        //dd($userInterface->getRoles());
+        if (in_array("ROLE_COACH", $userInterface->getRoles())) {
+            $form = $this->createForm(ResultType::class, $result);
+            $form->handleRequest($request);
+        }
+
+
+=======
         $form = $this->createForm(ResultType::class, $result);
         
         $form->handleRequest($request);
+>>>>>>> main
         if ($form->isSubmitted() && $form->isValid()) {
             $result->setTest($test);
             $result->setDoneAt( new DateTime('now'));
@@ -244,4 +263,50 @@ class CommonController extends AbstractController
     }
 
     
+    /**
+     * @Route("/ajax/{id}", name="ajax")
+     *
+     * @return Response
+     */
+    public function ajax(UserRepository $userRepository, ActivityRepository $activityRepository, Request $request, $id) : Response
+    {
+
+       // $patchole = "bidabidoubidouba";
+        //requete récupere tous les users de cette équipe par id
+        $playersTeam = $activityRepository->findBy(['team' => $id]);
+        //$playersListTeam = $userRepository->findAll();
+
+        $playerList = [];
+        foreach ($playersTeam as $player) {
+            if ($player->getRole() == 0) { 
+                $playerList [] = $player->getUser();
+            }
+            
+        }
+
+        //dd($playerList);
+
+    try {
+        return $this->json(
+                // les données à transformer en JSON
+                $playerList,
+                // HTTP STATUS CODE
+                200,
+                // HTTP headers supplémentaires, dans notre cas : aucune
+                [],
+                // Contexte de serialisation, les groups de propriété que l'on veux serialise
+                ['groups' => ['show_users']]
+        );
+
+     } catch (Exception $e){ // si une erreur est LANCE, je l'attrape
+        // je gère l'erreur
+        // par exemple si tu me file un genre ['3000'] qui n existe pas...
+         return new JsonResponse("Hoouuu !! Ce qui vient d'arriver est de votre faute : JSON invalide", Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+
+    }
+
+
+
 }
