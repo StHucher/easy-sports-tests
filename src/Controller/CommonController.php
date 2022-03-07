@@ -7,6 +7,7 @@ use App\Entity\Tag;
 use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
+use App\Form\EditType;
 use App\Form\PlayersByTeam;
 use App\Form\PlayersTeamType;
 use App\Form\ResultCurrentUserType;
@@ -131,11 +132,13 @@ class CommonController extends AbstractController
      */
     public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger, UserInterface $userInterface)
     {
-        /* $user = $this->getUser(); */
-        $form = $this->createForm(UserType::class, $user);
+        $user = $this->getUser();
+        $actualPassword=$user->getPassword();
+        $form = $this->createForm(EditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+
 
             $avatarFile = $form->get('picture')->getData();
             //If there is there some data in the field picture, we treat them
@@ -162,7 +165,7 @@ class CommonController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre compte vient d\'être modifié avec succès.');
+            $this->addFlash('success', 'Votre compte a été modifié avec succès.');
             /* $UserRepository->add($user); */
             return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
