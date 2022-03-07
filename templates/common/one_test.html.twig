@@ -8,8 +8,12 @@
         
 
    
-     {{ include('common/_form.html.twig') }}
-    <a href="{{ path('user_home', {slug : app.user.slug}) }}">retour à l'accueil</a>
+{{ form_start(form) }}
+    {{ form_row(form.team) }}    
+    {{ form_row(form.user) }} 
+    {{ form_row(form.result) }} 
+     <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}    <a href="{{ path('user_home', {slug : app.user.slug}) }}">retour à l'accueil</a>
 
 
 

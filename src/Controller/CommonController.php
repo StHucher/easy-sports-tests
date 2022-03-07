@@ -117,7 +117,10 @@ class CommonController extends AbstractController
 
             return $this->redirectToRoute('user_home',['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
         }
-        
+        return $this->renderForm('common/one_test.html.twig', [
+            'test' => $test,
+            'form' => $form,
+        ]);
     }
 
     /**
@@ -188,7 +191,10 @@ class CommonController extends AbstractController
         $id = $request->attributes->get('id');
         $players = $activityRepository->findBy(['team' => $id]);
         foreach($players as $player){
-            $data [] = $player->getUser();
+            if($player->getRole() != 1){
+                $data [] = $player->getUser();
+            }
+            
             
         }
         try {
