@@ -143,9 +143,9 @@
                       <div class="card-body">
                         <h5 class="card-title">Mon Profil</h5>
                         <ul class="list-group list-group-flush">
-                          <li class="list-group-item">Modifier mon profil</li>
-                          <li class="list-group-item">Ajouter une photo de profil</li>
-                          <li class="list-group-item">Modifier mon mot de passe</li>
+                          <li class="list-group-item"><a class="nav-link link-dark" href="{{path('profilpage', {slug : app.user.slug})}}">Modifier mon profil</a></li>
+                          <li class="list-group-item"><a class="nav-link link-dark" href="{{path('profilpage', {slug : app.user.slug})}}">Ajouter une photo de profil</a></li>
+                          <li class="list-group-item"><a class="nav-link link-dark" href="{{path('editpassword', {slug : app.user.slug})}}">Modifier mon mot de passe</a></li>
                         </ul>
                       </div>
                     </div>

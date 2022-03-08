@@ -54,5 +54,5 @@
     </div>
     
 {{ form_end(form) }}
-    <a href="{{ path('homepage') }}">retour à l'accueil</a>
+    <a href="{{path('user_home', {slug : app.user.slug})}}">retour à l'accueil</a>
 {% endblock %}
