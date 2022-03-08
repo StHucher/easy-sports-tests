@@ -28,23 +28,23 @@
   </div>
 
   <div class="d-flex flex-row text-start align-item">
-        <div class="col-md-3 m-3">
+        <div class="col-md-3 mx-3">
             {{ form_row(form.email) }} 
         </div>
 
-        <div class=" col-md-3 m-3">        
+        <div class=" col-md-3 mx-3">        
           {{ form_row(form.picture) }}
         </div>
         
-        <div class=" col-md-3 mb-3">        
+        <div class=" col-md-3 mx-3">        
           {{ form_row(form.city) }}
         </div>
-        <div class=" col-md-3 mb-3">        
+        <div class=" col-md-3 mx-3">        
           {{ form_row(form.club) }}
         </div>
   </div>
   <div class=" text-center">
-        <div class="card mb-5 col-xs-12 col-lg-4 buttoncard order-sm-2" style="width: 14rem;">                      
+        <div class="card mx-3  col-xs-12 col-lg-4 buttoncard" style="width: 14rem;">                      
           <a href="{{ path('editpassword',{slug : app.user.slug})}}" class="mt-5 btnpassword" role="button"><span>Modifier votre Mot de Passe</span></a>               
         </div>
   </div>
