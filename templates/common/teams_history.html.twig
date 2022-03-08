@@ -26,7 +26,7 @@
                         <tr>
                             <td class="text-left number">{{user[0].firstname}} <i class="fa fa-caret-up" aria-hidden="true"></i></td>
                             <td class="text-left"> <img src="http://html.iwthemes.com/sportscup/run/img/clubs-logos/bra.png" alt="Colombia"><span>{{user.name}}</span> </td>
-                            {% for result in user[0].results|slice(0, 6) %}
+                            {% for result in user[0].results [-6:] %}
                             <td>{{result.test.name}} : {{result.result}} ({{result.test.unit}})</td>
                             {% endfor %}
                             {# <td>26</td>

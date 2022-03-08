@@ -131,7 +131,7 @@ class CoachController extends AbstractController
      *
      * @return void
      */
-    public function historyByTeam(UserInterface $user, ActivityRepository $activityRepository, TestRepository $testRepository, ResultRepository $resultDepository,UserRepository $userRepository)
+    public function historyByTeam(UserInterface $user, TestRepository $testRepository, ResultRepository $resultDepository,UserRepository $userRepository)
     {   
         $allTests = $testRepository->eightTests();
         foreach($allTests as $test){
@@ -143,13 +143,12 @@ class CoachController extends AbstractController
         }
         foreach($teamsId as $id){
             $allUsers [] = $userRepository->getUsersAndTeamByTeamId($id);
+            // foreach($allUsers as $user){
+            //     $resultDepository->
+            // }
         }
-        // foreach ($teamsId as $id) {
-        //     $teamsWithPlayers [] = $activityRepository->findBy(['team' => $id]);
-            
-            
-        // }
-        return $this->render('/common/teams_history.html.twig',[
+        
+            return $this->render('/common/teams_history.html.twig',[
             'teams' => $allUsers,
             'tests' => $allTests,
         ]);
