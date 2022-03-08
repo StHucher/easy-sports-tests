@@ -86,8 +86,8 @@ class UserType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'application/jpg',
-                            'application/png',
+                            'image/jpg',
+                            'image/png',
                         ],
                         'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou png',
                     ])

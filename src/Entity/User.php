@@ -68,11 +68,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true,)
-     * @Assert\File(
-     *     maxSize = "1024k",
-     *     mimeTypes = {"application/jpg", "application/png"},
-     *     mimeTypesMessage = "Merci d\'insérer un fichier jpg ou png"
-     * )
      */
     private $picture;
 

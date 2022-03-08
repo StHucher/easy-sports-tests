@@ -25,6 +25,11 @@
                 {{ message }}
             </div>
     {% endfor %}
+    {% for message in app.flashes('error') %}
+            <div class="alert alert-error">
+                {{ message }}
+            </div>
+    {% endfor %}
 
 {# header de l'utilisateur connecté#}
     {% if app.user %}

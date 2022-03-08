@@ -43,12 +43,8 @@ class HomeController extends AbstractController
             
             $avatarFile = $form->get('picture')->getData();
             //If there is there some data in the field picture, we treat them
-            if($avatarFile){
-                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
-
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+            if ($avatarFile != null) {
+                $newFilename = 'user'.uniqid().'.'.$avatarFile->guessExtension();
 
                 // Move the file to the directory where avatars are stored
                 try {
@@ -56,15 +52,14 @@ class HomeController extends AbstractController
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
-                } catch (FileException $e) {
-                    // ... TO DO handle exception if something happens during file upload
+                } catch (FileException $e) { 
+                    $this->addFlash('error', 'Une erreur est survenue. Essayer à nouveau');
+                    return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER); 
                 }
 
                 // We update the user class
                 $user->setPicture($newFilename);
-            }
-            
-
+            }         
 
             $entityManager->persist($user);
             $entityManager->flush();
