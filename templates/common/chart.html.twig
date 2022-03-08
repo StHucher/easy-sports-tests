@@ -22,7 +22,6 @@
     <p>Ce graphique montre l'évolution des résultats officiels de tes tests</p>
     </div>
     <div class="col-12 col-md-6">
-   
     {{ render_chart(chart, {'class': 'my-chart'}) }} 
     </div>
 
@@ -41,13 +40,37 @@
 
 
 </div>         
+<div class="row mt-5">
+    <h1 class="mb-4">Historique</h1>
 
-<h1>Historique</h1>
+    <div class="col-12">
+        <table class="table table-light table-hover text-center">
+            <thead>
+                <tr>
+                <th scope="col">Résultats</th>
+                <th scope="col">Date</th>
+                <th scope="col">Off./Ent.</th>
+        
+                </tr>
+            </thead>
 
-{% for result in myresults | sort %}
-    
-    <p>{{ result.result }}  {{ result.doneAt | date('d-m-Y')}}  {{ result.status == 1 ? "Officiel" : "Entrainement" }}</p>
+            {% for result in myresults | sort ((b,a) => a.doneAt <=> b.doneAt)%}
 
-{% endfor %}
+                <tr>
+                    <td>{{ result.result }}</td> 
+                    <td>{{ result.doneAt | date('d-m-Y') }}</td> 
+                    <td>{{ result.status == 1 ? "Officiel" : "Entrainement" }}</td> 
+                
+                </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+ {#    <p>{{ result.result }}  {{ result.doneAt | date('d-m-Y')}}  {{ result.status == 1 ? "Officiel" : "Entrainement" }}</p> #}
+
+
 
 {% endblock %}

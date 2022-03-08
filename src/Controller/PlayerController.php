@@ -97,6 +97,8 @@ class PlayerController extends AbstractController
 
         $chart->setOptions([/* ... */]);
 
+            
+
         return $this->render('common/chart.html.twig', [
             'test' => $test,
             'chart' => $chart,
