@@ -45,6 +45,15 @@ class TestRepository extends ServiceEntityRepository
         }
     }
 
+    public function eightTests()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.id', 'ASC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Test[] Returns an array of Test objects
     //  */

@@ -38,7 +38,7 @@
                   <div class="card-body">
                     <h5 class="card-title"><a href="{{ path('history', {slug: user.slug}) }}">Voir ses Résultats</a></h5>
                     <ul class="list-group list-group-flush">
-                    {% for result in user.results %}
+                    {% for result in user.results [-5:] %}
                       <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}} <div class="badge">{% if result.status == 1 %} <span>Officiel</span> {% else %} <span>Personnel</span> {% endif %}</div></li>
                       {% endfor %}
                       
@@ -110,7 +110,7 @@
                   <div class="card-body">
                     <h5 class="card-title"><a href="{{ path('history', {slug: user.slug}) }}">Mes Résultats</a></h5>
                     <ul class="list-group list-group-flush">
-                    {% for result in user.results%}
+                    {% for result in user.results [-5:] %}
                       <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}} <div class="badge">{% if result.status == 1 %} <span>Officiel</span> {% else %} <span>Personnel</span> {% endif %}</div></li>
                       {% endfor %}
                       

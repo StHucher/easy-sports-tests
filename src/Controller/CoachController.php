@@ -7,7 +7,9 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Form\ResultType;
 use App\Repository\ActivityRepository;
+use App\Repository\ResultRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TestRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -121,6 +123,34 @@ class CoachController extends AbstractController
             'form' => $form,
             'players'=>$players,
             'team'=>$team
+        ]);
+    }
+
+    /**
+     * @Route("/teams/history", name="teams_history")
+     *
+     * @return void
+     */
+    public function historyByTeam(UserInterface $user, TestRepository $testRepository, ResultRepository $resultDepository,UserRepository $userRepository)
+    {   
+        $allTests = $testRepository->eightTests();
+        foreach($allTests as $test){
+            $alltestsId [] = $test->getId();
+        }
+        $activities = $user->getActivities();
+        foreach($activities as $activity){
+            $teamsId [] = $activity->getTeam()->getId();
+        }
+        foreach($teamsId as $id){
+            $allUsers [] = $userRepository->getUsersAndTeamByTeamId($id);
+            // foreach($allUsers as $user){
+            //     $resultDepository->
+            // }
+        }
+        
+            return $this->render('/common/teams_history.html.twig',[
+            'teams' => $allUsers,
+            'tests' => $allTests,
         ]);
     }
        
