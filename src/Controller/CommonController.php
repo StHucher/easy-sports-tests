@@ -157,7 +157,7 @@ class CommonController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... TO DO handle exception if something happens during file upload
+                    dd('Je suis ici'); 
                 }
                 $user->setPicture(
                     new File($this->getParameter('uploads_directory').'/'.$user->getPicture())

@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -39,6 +40,7 @@ class HomeController extends AbstractController
             $user->setStatus(1);
             $user->setSlug('slug'.random_int(1,9999999999));
 
+            
             $avatarFile = $form->get('picture')->getData();
             //If there is there some data in the field picture, we treat them
             if($avatarFile){
