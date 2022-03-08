@@ -3,17 +3,34 @@
 {% block title %}{% endblock %}
 
 {% block body %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('userTeam') }}
+{% endblock %}
 <div class="container">
-     <h1 class="text-center"></h1>
+    <div class="d-inline-flex">
+        <div class="d-inline-flex flex-column">
+            <h1 class="title-page name_test">Test : {{test.name}} (en {{test.unit}})</h1>
+                <p id="description_test">{{test.description}}</p>
+                {{ form_start(form) }}
+                {{ form_row(form.team) }}    
+                {{ form_row(form.user) }} 
+                {{ form_row(form.result) }} 
+                <button class="btn">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }} 
+        </div>
+        <div class="d-inline-flex">
+            <img src="{{ asset(  test.media ) }}" style="width:100%" id="test_img">
+                <video class="d-none"id="test_video" width="100%"  controls>
+                    <source  type="video/mp4">
+                </video>
+        </div>
+    </div>
+</div>
         
 
    
-{{ form_start(form) }}
-    {{ form_row(form.team) }}    
-    {{ form_row(form.user) }} 
-    {{ form_row(form.result) }} 
-     <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}    <a href="{{ path('user_home', {slug : app.user.slug}) }}">retour à l'accueil</a>
+    <a href="{{ path('user_home', {slug : app.user.slug}) }}">retour à l'accueil</a>
 
 
 

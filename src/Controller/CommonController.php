@@ -182,7 +182,7 @@ class CommonController extends AbstractController
     }
 
     /**
-     * @Route("/teamFromResult/{id}", name="team_result", methods={"GET","POST"})
+     * @Route("/teamFromResult/{id}", name="team_result", methods={"GET","POST"}, requirements={"id" = "\d+"})
      *
      * @return void
      */
@@ -207,6 +207,35 @@ class CommonController extends AbstractController
                     [],
                     // Contexte de serialisation, les groups de propriété que l'on veux serialise
                     ['groups' => ['show_users']]
+            );
+    
+         } catch (Exception $e){ // si une erreur est LANCE, je l'attrape
+            // je gère l'erreur
+            // par exemple si tu me file un genre ['3000'] qui n existe pas...
+             return new JsonResponse("Hoouuu !! Ce qui vient d'arriver est de votre faute : JSON invalide", Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    }
+
+
+    /**
+     * @Route("testFromResult/{id}", name="test_result", methods={"GET", "POST"},requirements={"id" = "\d+"})
+     *
+     * @return void
+     */
+    public function testFromResult(Request $request, TestRepository $testRepository)
+    {
+        $id = $request->attributes->get('id');
+        $test = $testRepository->findBy(['id'=> $id]);
+        try {
+            return $this->json(
+                    // les données à transformer en JSON
+                    $test,
+                    // HTTP STATUS CODE
+                    200,
+                    // HTTP headers supplémentaires, dans notre cas : aucune
+                    [],
+                    // Contexte de serialisation, les groups de propriété que l'on veux serialise
+                    ['groups' => ['show_test']]
             );
     
          } catch (Exception $e){ // si une erreur est LANCE, je l'attrape

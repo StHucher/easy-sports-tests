@@ -19,6 +19,7 @@ class ResultCurrentUserType extends AbstractType
             ->add('test',EntityType::class,[
                 'class' => Test::class,
                 'choice_label' => 'name',
+                'placeholder' => 'Choisissez un Test',
             ]);
         ;
     }

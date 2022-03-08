@@ -3,15 +3,39 @@
 {% block title %}{% endblock %}
 
 {% block body %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('test') }}
+{% endblock %}
 <div class="container">
-     <h1 class="text-center"></h1>
+    <div class="d-inline-flex">
+        <div class="d-inline-flex flex-column">
+            <h1 class="title-page name_test"></h1><span id="unit_test"></span>
+                <p id="description_test"></p>
+                {{ form_start(form) }}
+                {{ form_row(form.test) }}    
+                {{ form_row(form.result) }} 
+                <button class="btn">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }} 
+        </div>
+        <div class="d-inline-flex">
+            <img style="width:100%" id="test_img">
+                <video class="d-none"id="test_video" width="100%"  controls>
+                    <source  type="video/mp4">
+                </video>
+        </div>
+    </div>
+          
+
+     
         
 
    
-     {{ include('common/_form.html.twig') }}
+    </div>
+
     <a href="{{ path('user_home', {slug : app.user.slug}) }}">retour à l'accueil</a>
 
 
 
-    </div
+
 {% endblock %}
