@@ -18,21 +18,21 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        return $this->render('admin/dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Projet 20 Easy Sports Tests');
+            ->setTitle('Admin Easy Sports Tests');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Users', 'fas fa-solid fa-chart-line', User::class);
+        yield MenuItem::linkToCrud('Users', 'fas fa-solid fa-users', User::class);
         yield MenuItem::linkToCrud('Tests', 'fas fa-solid fa-chart-line', Test::class);
-        yield MenuItem::linkToCrud('Tags', 'fas fa-solid fa-chart-line', Tag::class);
+        yield MenuItem::linkToCrud('Tags', 'fas fa-solid fa-tag', Tag::class);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
