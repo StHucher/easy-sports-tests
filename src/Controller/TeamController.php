@@ -122,14 +122,16 @@ class TeamController extends AbstractController
         'user' => $user->getId(),
         'team' => $activity->getTeam()->getId()
         ] );
-
-    // boucle sur les activity pour savoir s'il a les droits
-    $rights = [];
+    
+    // check si il a les droits  
+    $haveRights = false;
     foreach ($userActivityInThisTeam as $user) {
-        $role = $user->getRole();
-        $rights[] = $role;
-    }
-    if (in_array('1',$rights)) {
+        if ($user->getRole() === 1) {
+            $haveRights = true;
+        }
+    }  
+
+    if ($haveRights) {
         // !!! Formulaire delete dans le twig !!!
         if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
             $activityRepository->remove($activity);
