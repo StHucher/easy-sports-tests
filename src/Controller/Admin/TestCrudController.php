@@ -26,7 +26,7 @@ class TestCrudController extends AbstractCrudController
             TextEditorField::new('description'),
             ImageField::new('media')->hideOnIndex()->setUploadDir('public/uploads/images/tests'),
             TextField::new('unit'),
-            TextField::new('slug')->hideOnIndex(),
+            TextField::new('slug')->hideOnIndex()->hideOnForm(),
         ];
 
         

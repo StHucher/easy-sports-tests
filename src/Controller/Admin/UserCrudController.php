@@ -42,7 +42,7 @@ class UserCrudController extends AbstractCrudController
                 'Compte suspendus' => '0',
             ]),
 
-            TextField::new('slug')->hideOnIndex(),
+            TextField::new('slug')->hideOnIndex()->hideOnForm(),
 
             
 
