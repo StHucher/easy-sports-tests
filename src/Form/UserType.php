@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -27,25 +28,26 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom'
+                'label' => 'Prénom*'
             ] )
             ->add('lastname', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom*'
             ])
             ->add('birthdate', TypeDateType::class,[
-                'label' => 'Date de naissance',
+                'label' => 'Date de naissance*',
                 'years' => range(1950,2050)
             ])
             ->add('email', EmailType::class, [
                 'required' => true,
+                'label' => 'Email*'
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmez le mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe*'],
+                'second_options' => ['label' => 'Confirmez le mot de passe*'],
 
                 'constraints' => [
                         new NotBlank([
@@ -68,7 +70,7 @@ class UserType extends AbstractType
                 ],
                 'multiple' => true,
                 'expanded' => true
-            ])
+            ])         
             
             
             
@@ -77,22 +79,22 @@ class UserType extends AbstractType
                 ])
             /*->add('slug') */
             ->add('picture', FileType::class,[
-                'label' => 'Ton avatar ou photo',
+                'label' => 'Ton avatar ou photo (jpg, png)',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'application/jpg',
-                            'application/png',
+                            'image/jpg',
+                            'image/png',
                         ],
                         'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou png',
                     ])
                 ],
 
             ])
-            /* ->add('city')
+            /*  ->add('city')
             ->add('club', EntityType::class,[
                 'class' => Club::class,
                 'choice_label'=> 'name',

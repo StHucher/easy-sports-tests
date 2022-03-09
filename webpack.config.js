@@ -24,6 +24,7 @@ Encore
     .addEntry('userTeam', './assets/userTeam.js')
     .addEntry('test', './assets/test.js')
 
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 

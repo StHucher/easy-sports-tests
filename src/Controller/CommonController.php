@@ -7,6 +7,7 @@ use App\Entity\Tag;
 use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
+use App\Form\EditType;
 use App\Form\PlayersByTeam;
 use App\Form\PlayersTeamType;
 use App\Form\ResultCurrentUserType;
@@ -35,6 +36,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 
 class CommonController extends AbstractController
 {
@@ -128,50 +133,57 @@ class CommonController extends AbstractController
      *
      * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
      */
-    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, SluggerInterface $slugger, UserInterface $userInterface)
+    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, SluggerInterface $slugger, UserInterface $userInterface): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user);
+
+        /* We create an object $filesystem which allowed us all the function of this class, as remove() */
+        $filesystem = new Filesystem();        
+
+        $form = $this->createForm(EditType::class, $user);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()){
-            //Is there a new password ?
-            if($form-> get('password')->getData()){
-                // if yes, we hashe the new password
-                $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
-                // we set the new password
-                $user->setPassword($hashedPassword);
-            }
-
+            
             $avatarFile = $form->get('picture')->getData();
-            //If there is there some data in the field picture, we treat them
-            if($avatarFile){
-                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
 
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+            //If there is some data in the field picture, we treat them
+            if($avatarFile != null){
 
-                // Move the file to the directory where avatars are stored
-                try {
-                    $avatarFile->move(
-                        $this->getParameter('avatar_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... TO DO handle exception if something happens during file upload
+                /* https://symfony.com/doc/current/components/filesystem.html#remove */
+             
+                /* If there was already a picture, we removed it*/
+                if ($user->getPicture() != null) {
+                    /*we get all the path of the picture*/
+                $file = new File($this->getParameter('uploads_directory') .'/'. $user->getPicture());
+                $filesystem->remove($file);
                 }
 
-                // We update the user class
-                $user->setPicture($newFilename);
-            }
-            $entityManager->persist($user);
-            $entityManager->flush();
+                $newFilename = 'user'.uniqid().'.'.$avatarFile->guessExtension();
+                
+                // Move the file to the directory where avatars are stored
+                 try {
+                    $avatarFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                    /*If a error occurs*/
+                    } catch (FileException $e) { 
+                        $this->addFlash('error', 'Une erreur est survenue. Essayer à nouveau');
+                        return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER); 
+                    }
 
-            $this->addFlash('info', 'Votre compte vient d\'être modifié avec succès.');
-            /* $UserRepository->add($user); */
-            return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
+                $user->setPicture($newFilename);
+            
+                /* $entityManager->persist($user); */
+                $entityManager->flush();
+                    
+            }
+            $this->addFlash('success', 'Votre compte a été modifié avec succès.');
+            return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER); 
         }
+
 
         /*display the form*/
         return $this->renderForm('home/edit.html.twig', [
@@ -182,7 +194,47 @@ class CommonController extends AbstractController
     }
 
     /**
-     * @Route("/teamFromResult/{id}", name="team_result", methods={"GET","POST"}, requirements={"id" = "\d+"})
+
+     * Function editPassword
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param User $user
+     * @param UserPasswordHasherInterface $encoder
+     * @param UserInterface $userInterface
+     * @return void
+     * @Route("/{slug}/profil/password", name ="editpassword", methods = {"GET", "POST"})
+     */
+    public function editPassword(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordHasherInterface $encoder, UserInterface $userInterface)
+    {
+        /* $user = $this->getUser(); */
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Is there a new password ?
+            if ($form-> get('password')->getData()) {
+                // if yes, we hashe the new password
+                $hashedPassword = $encoder->hashPassword($user, $form->get('password')->getData());
+                // we set the new password
+                $user->setPassword($hashedPassword);
+
+                $this->addFlash('success', 'Le mot de passe vient d\'être modifié avec succès.');
+            }
+            /* $entityManager->persist($user); */
+            $entityManager->flush();
+
+            return $this->redirectToRoute('profilpage', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+        /*display the form*/
+        return $this->renderForm('home/password.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/teamFromResult/{id}", name="team_result", methods={"GET","POST"})
      *
      * @return void
      */
