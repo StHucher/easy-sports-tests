@@ -60,6 +60,16 @@ body {
     text-decoration: none;
 }
 
+.btnpassword{
+    text-align: center;
+    text-decoration: none;
+    border:2px solid rgb(80,80,80);
+    background-color: #7aaf65;
+    line-height: 3rem;
+    border-radius: 10px;
+    color:#fff;
+}
+
 .btn-info > a{
     color:red;
 }
