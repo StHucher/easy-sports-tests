@@ -174,12 +174,12 @@ class CommonController extends AbstractController
                         return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER); 
                     }
 
-                $user->setPicture($newFilename);
-            
-                /* $entityManager->persist($user); */
-                $entityManager->flush();
+                $user->setPicture($newFilename);        
+               
                     
             }
+             /* $entityManager->persist($user); */
+            $entityManager->flush();
             $this->addFlash('success', 'Votre compte a été modifié avec succès.');
             return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER); 
         }
