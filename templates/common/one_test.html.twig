@@ -20,10 +20,12 @@
                 {{ form_end(form) }} 
         </div>
         <div class="d-inline-flex">
+        {% if test.media != null %}
             <img src="{{ asset(  test.media ) }}" style="width:100%" id="test_img">
                 <video class="d-none"id="test_video" width="100%"  controls>
                     <source  type="video/mp4">
                 </video>
+        {% endif %}
         </div>
     </div>
 </div>

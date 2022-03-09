@@ -140,7 +140,6 @@ class TeamController extends AbstractController
     }
 
     // sinon tu renvois une erreur !!!
-        dd('tu n as pas le droit de supprimer ce joueur');
         return $this->redirectToRoute('coach_teams', [], Response::HTTP_SEE_OTHER);
     }
 

@@ -42,7 +42,6 @@ class ActivityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $myTeam = $team->find($id);
-            //dd($myTeam);
             $activity->setRole('0');
             $activity->setTeam($myTeam);
  
