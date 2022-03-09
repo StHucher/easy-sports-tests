@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -102,6 +103,45 @@ class TeamController extends AbstractController
             'team' => $team,
             'form' => $form,
         ]);
+    }
+
+    /** Delete player from my team
+     * @Route("/delete/{id}", name="app_team_delete_player_from_team", methods={"POST"})
+     */
+    public function deletePlayerFromTeam(Request $request, Activity $activity, ActivityRepository $activityRepository, Security $security): Response
+    {
+
+    
+    // ? est ce que la personne qui essaie de supprimer est bien entraineur de l'équipe ?
+    // récupère le user courant
+    $user = $security->getUser();
+
+    // récupere toutes les activity du user courant dans l'équipe du joueur qu'on tente de supprimer
+    // tableau ? oui le joueur peut avoir plusieurs activity dans une équipe car plusieurs roles
+    $userActivityInThisTeam = $activityRepository->findBy([
+        'user' => $user->getId(),
+        'team' => $activity->getTeam()->getId()
+        ] );
+    
+    // check si il a les droits  
+    $haveRights = false;
+    foreach ($userActivityInThisTeam as $user) {
+        if ($user->getRole() === 1) {
+            $haveRights = true;
+        }
+    }  
+
+    if ($haveRights) {
+        // !!! Formulaire delete dans le twig !!!
+        if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
+            $activityRepository->remove($activity);
+            return $this->redirectToRoute('coach_teams', [], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    // sinon tu renvois une erreur !!!
+        dd('tu n as pas le droit de supprimer ce joueur');
+        return $this->redirectToRoute('coach_teams', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

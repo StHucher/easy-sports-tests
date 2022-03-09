@@ -38,7 +38,8 @@ class HomeController extends AbstractController
             $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
             /*When you create a new user I fix the status to 1 (active) and define the slug*/
             $user->setStatus(1);
-            $user->setSlug('slug'.random_int(1,9999999999));
+
+            $user->setSlug($user->getFirstname());
 
             
             $avatarFile = $form->get('picture')->getData();
