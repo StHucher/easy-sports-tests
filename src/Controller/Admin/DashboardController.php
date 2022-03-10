@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tag;
+use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -34,6 +35,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Users', 'fas fa-solid fa-users', User::class);
         yield MenuItem::linkToCrud('Tests', 'fas fa-solid fa-chart-line', Test::class);
         yield MenuItem::linkToCrud('Tags', 'fas fa-solid fa-tag', Tag::class);
+        yield MenuItem::linkToCrud('TagsTest', 'fas fa-solid fa-tag', TagTest::class);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }

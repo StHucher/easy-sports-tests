@@ -57,7 +57,7 @@ class Test
     private $results;
 
     /**
-     * @ORM\OneToMany(targetEntity=TagTest::class, mappedBy="test")
+     * @ORM\OneToMany(targetEntity=TagTest::class, mappedBy="test", orphanRemoval= true )
      */
     private $tagTests;
 
@@ -190,5 +190,10 @@ class Test
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }
