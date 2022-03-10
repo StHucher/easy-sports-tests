@@ -41,7 +41,10 @@ class TagTestCrudController extends AbstractCrudController
              //AssociationField::new('tag')->onlyOnForms()->setFormTypeOptions(["choices" => $tag->getName()->__toString()]), 
             yield AssociationField::new('test')->setFormTypeOption('disabled','disabled'),              
             yield AssociationField::new('tag'),     
-   
+            yield ChoiceField::new('isPrimary')->setChoices([
+                'non-primary' => 0,
+                'primary' => 1 
+            ])->hideOnForm(),     
 
                // AssociationField::new('test')->setCrudController(TestCrudController::class),
                 //AssociationField::new('tag')->setCrudController(TagCrudController::class),
