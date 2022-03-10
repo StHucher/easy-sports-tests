@@ -4,18 +4,23 @@ namespace App\Controller\Admin;
 
 use App\Entity\Tag;
 use App\Entity\Test;
+use App\Form\TagType;
 use App\Repository\TagRepository;
 use App\Repository\TagTestRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use phpDocumentor\Reflection\PseudoTypes\True_;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 
 class TestCrudController extends AbstractCrudController
 {
@@ -42,16 +47,10 @@ class TestCrudController extends AbstractCrudController
     {
 
 
-        //$tags = $this->entityManager->getRepository(Tag::class);
-
-            //$tags = $this->entityManager->getRepository(Tag::class)->findAll();
-
-            //dd($tags->getName());
-           /*  yield AssociationField::new('klient_id_klienta')->onlyOnForms()->setFormTypeOptions(["choices" => $users->toArray()]); */
               
-           $association = AssociationField::new('tagTests')->setFormTypeOption(
-                   'query_builder', function (TagRepository  $tagRepository){
-                       return $tagRepository->findAll();   } 
+           $association = ArrayField::new('tagTests')->setFormTypeOption('choice_label', 'tag')->setFormTypeOption(
+                   'query_builder', function (TagTestRepository  $tagTestRepository){
+                       return $tagTestRepository->findAll();   } 
                 
            );
            $tags = $this->tagRepository->findAll();
@@ -65,15 +64,8 @@ class TestCrudController extends AbstractCrudController
             TextField::new('unit'),
             TextField::new('slug')->hideOnIndex()->hideOnForm(),
             AssociationField::new('tagTests')->setFormTypeOption('choice_label', 'tag')->setFormTypeOption('by_reference', false),
-            
 
-
-            
-
- 
-        ];
-
-        
+        ];        
     }
 
     public function configureCrud(Crud $crud): Crud
