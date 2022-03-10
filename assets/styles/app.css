@@ -46,7 +46,7 @@ body {
     background: rgb(0, 0, 0); 
     background: rgba(0, 0, 0, 0.3); 
     color: #f1f1f1; /* Grey text */
-   /*  width: 90%; */ /* Full width */
+    /* width: 90%; */ /* Full width */
     padding: 15px; /* Some padding */
     z-index: 0;
     margin-top: 4rem;
