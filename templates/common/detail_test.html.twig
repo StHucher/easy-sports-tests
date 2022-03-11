@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tests{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <div class="row mt-5">
+        <h1 class="mb-4">Liste des tests </h1>
+
+        <div class="col-12">
+            <table class="table table-light table-hover text-center">
+                <thead>
+                    <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">lien</th>
+            
+                    </tr>
+                </thead>
+
+                {% for test in listTests | sort ((a,b) => a.name <=> b.name)%}
+
+                    <tr>
+                        <td>{{ test.name }}</td> 
+
+                        <td><a href="{{path('list_tests')}}" class="btn-1 p-1 btntest" role="button"> Voir + </a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+       
+
+
+{% endblock %}
