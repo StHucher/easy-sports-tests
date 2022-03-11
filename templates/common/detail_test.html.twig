@@ -7,33 +7,57 @@
 <div class="container">
 
     <div class="row mt-5">
-        <h1 class="mb-4">Liste des tests </h1>
+        
+        <p>
+            {% for tag in test.tags %}
+                {% if tag.isPrimary %}
+                    {% if tag.name == 'Physique' %}
+                        <span class="badge bg-danger" >  {{tag}}  </span>
+                    {% else %}
+                            <span class="badge bg-primary" >  {{tag}}  </span>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
 
-        <div class="col-12">
-            <table class="table table-light table-hover text-center">
-                <thead>
-                    <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">lien</th>
-            
-                    </tr>
-                </thead>
+            {% for tag in test.tags %}
+                {% if tag.isPrimary == false%}
+                    <span class="badge bg-secondary" >  {{tag}}  </span>
+                {% endif %}
+            {% endfor %}
+        </p>
 
-                {% for test in listTests | sort ((a,b) => a.name <=> b.name)%}
+        <h1 class="mb-4"> {{test.name}} </h1>
 
-                    <tr>
-                        <td>{{ test.name }}</td> 
+        <div class="row">
+                <div class="col-12">
+                <a class="btn-1 p-1 btntest" role="button" href="{{app.request.headers.get('referer')}}"> Retour</a>
 
-                        <td><a href="{{path('list_tests')}}" class="btn-1 p-1 btntest" role="button"> Voir + </a></td>
-                    </tr>
-
-                {% endfor %}
-            </table>
+                    
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="row">
+        <div class="col-12 col-md-8">
+            <p>{{test.description}}</p>
+        <div><br></div><ul><li>1.matériel :<ul><li>1 ballon</li></ul></li></ul><div><br></div><ul><li>2.consignes&nbsp;<ul><li>Tu as <strong>3 essais </strong>à partir du moment ou tu as décidé de commencer le test.&nbsp;</li><li>Essaie de ne pas en faire plus ! si tu n'es pas content, tu <strong>réessaieras </strong>un autre jour.</li><li>Reporte sur le site uniquement le meilleur essaie des 3</li></ul></li></ul><div><br></div><div><br></div>
+
+            {# <p{{test.instructions | raw}}></p> #}
+        </div>
+        <div class = "col-12 col-md-4">
+                            
+                                        
+    
+                <img class="block" src="{{asset('assets/img/') ~test.media}}" width="100%"> 
+          
+              
+    
 
 
+           
+        </div>
 
+
+        </div>
 
 
 </div>

@@ -74,7 +74,18 @@ class CommonController extends AbstractController
         return $this->render('common/all_tests.html.twig');
     }
 
-        /**
+    /**
+     * @Route("/test/detail/{slug}", name="detail_test")
+     *
+     * @return Response
+     */
+    public function detailTest(Test $test) : Response
+    {
+        
+        return $this->render('common/detail_test.html.twig', ['test' => $test]);
+    }
+
+    /**
      * @Route("/tests/list", name="list_tests")
      *
      * @return Response
@@ -86,7 +97,6 @@ class CommonController extends AbstractController
 
         return $this->render('common/list_tests.html.twig', ['listTests' => $listTests]);
     }
-
     /**
      * @Route("/tests/physique", name="test_physique")
      *
