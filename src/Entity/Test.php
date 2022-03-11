@@ -35,6 +35,11 @@ class Test
     private $description;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $instructions;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"show_test"})
      */
@@ -94,6 +99,18 @@ class Test
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getInstructions(): ?string
+    {
+        return $this->instructions;
+    }
+
+    public function setInstructions(?string $instructions): self
+    {
+        $this->instructions = $instructions;
 
         return $this;
     }
