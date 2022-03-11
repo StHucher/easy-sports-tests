@@ -58,7 +58,7 @@ class EditType extends AbstractType
             'label' => 'Ton avatar ou photo (jpg, png)',
             'mapped' => false,
             'required' => false,
-            /* 'constraints' => [
+            /*'constraints' => [
                 new File([
                     'maxSize' => '1024k',
                     'mimeTypes' => [
@@ -67,7 +67,7 @@ class EditType extends AbstractType
                     ],
                     'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou png',
                 ])
-            ], */
+            ],*/
             'data_class' => null,
 
         ])
