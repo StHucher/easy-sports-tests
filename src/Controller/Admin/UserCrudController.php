@@ -30,22 +30,33 @@ class UserCrudController extends AbstractCrudController
         
             $fields [] = yield TextField::new('email')->hideOnIndex();
             $fields [] = yield TextField::new('password', 'Mot de passe : A cacher en production, et enlever le password type')->hideOnIndex()->hideOnDetail()->setFormType(PasswordType::class);
-            $fields [] = yield TextField::new('Firstname', 'Prénom');
-            $fields [] = yield TextField::new('Lastname', 'Nom');
+            
+            //exemple pour afficher en fonction de la page en cours
+            // if page index alors tu affiche Lastname en premier sinon tu les inverses
+            // ca tombe bien sur l index on tri le lastname par ordre ASC (voir plus bas "configure crud)
+            if ($pageName == Crud::PAGE_INDEX) {
+                $fields [] = yield TextField::new('Lastname', 'Nom');
+                $fields [] = yield TextField::new('Firstname', 'Prénom');
+            } 
+            else {
+                $fields [] = yield TextField::new('Firstname', 'Prénom');
+                $fields [] = yield TextField::new('Lastname', 'Nom');
+            }
+            
+            
+
             $fields [] = yield DateField::new('birthdate', 'Date de naissance');
             $fields [] = yield ImageField::new('picture', 'Image')->hideOnIndex()->setUploadDir('public/uploads/images/users');
 
 
             $fields [] = yield ChoiceField::new('roles', 'Role(s)')->setChoices([
-                // $value => $badgeStyleName
                 'Admin'  => 'ROLE_ADMIN',
                 'Coach' => 'ROLE_COACH',
-                'User' => 'ROLE_USER',
+                'Joueur' => 'ROLE_PLAYER',
             ])->renderExpanded()->allowMultipleChoices();
 
 
             $fields [] = yield ChoiceField::new('status', 'Valide/Banni')->setChoices([
-                // $value => $badgeStyleName
                 'Valide' => '1',
                 'Compte suspendus' => '0',
             ]);
@@ -54,4 +65,12 @@ class UserCrudController extends AbstractCrudController
 
             return $fields;
     }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud 
+          ->setDefaultSort(['lastname' => 'ASC']);
+    } 
+
+
 }
