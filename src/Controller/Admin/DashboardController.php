@@ -3,8 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tag;
+use App\Entity\TagTest;
 use App\Entity\Test;
 use App\Entity\User;
+use App\Repository\ResultRepository;
+use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -13,13 +16,30 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
+    protected $userRepository;
+    protected $resultRepository;
+
+    public function __construct(UserRepository $userRepository, ResultRepository $resultRepository) {
+
+        $this->userRepository = $userRepository;
+        $this->resultRepository = $resultRepository;
+
+    }
+
     /**
      * @Route("/admin", name="admin")
      */
     public function index(): Response
     {
-        
-        return $this->render('admin/dashboard.html.twig');
+        $users = $this->userRepository->findAll();
+        $results = $this->resultRepository->findAll();
+        $numberOfUsers = count($users);
+        $numberOfResults = count($results);
+
+        return $this->render('admin/views/index.html.twig', [
+            'numberOfUsers' => $numberOfUsers,
+            'numberOfResults' => $numberOfResults
+        ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -35,6 +55,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Tests', 'fas fa-solid fa-chart-line', Test::class);
         yield MenuItem::linkToCrud('Tags', 'fas fa-solid fa-tag', Tag::class);
 
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
