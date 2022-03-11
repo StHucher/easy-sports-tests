@@ -57,7 +57,7 @@ class Test
     private $results;
 
     /**
-     * @ORM\OneToMany(targetEntity=TagTest::class, mappedBy="test", orphanRemoval= true )
+     * @ORM\OneToMany(targetEntity=TagTest::class, mappedBy="test",cascade={"remove"} )
      */
     private $tagTests;
 
