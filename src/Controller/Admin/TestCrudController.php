@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Test;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -28,6 +29,7 @@ class TestCrudController extends AbstractCrudController
             ImageField::new('media')->hideOnIndex()->setUploadDir('public/uploads/images/tests'),
             TextField::new('unit'),
             TextField::new('slug')->hideOnIndex()->hideOnForm(),
+            AssociationField::new(('tags'))
         ];
 
         
