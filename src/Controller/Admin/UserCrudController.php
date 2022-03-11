@@ -44,9 +44,6 @@ class UserCrudController extends AbstractCrudController
 
             TextField::new('slug')->hideOnIndex()->hideOnForm(),
 
-            
-
-
         ];
     }
 }
