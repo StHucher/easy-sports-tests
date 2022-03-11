@@ -27,7 +27,8 @@ class TestCrudController extends AbstractCrudController
         return [
             IdField::new('id')->onlyOnDetail(),
             TextField::new('name', 'Nom'),
-            TextEditorField::new('description'),
+            TextField::new('description'),           
+            TextEditorField::new('instructions'),
             ImageField::new('media')->hideOnIndex()->setUploadDir('public/uploads/images/tests'),
             ChoiceField::new('unit', 'Unité du test')->setChoices([
                 'Nbre'  => 'Nbre',
