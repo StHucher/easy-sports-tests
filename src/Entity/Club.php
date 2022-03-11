@@ -201,4 +201,12 @@ class Club
 
         return $this;
     }
+
+    // If you want to write a object
+    
+    public function __toString(): string
+    {
+        return $this->name;
+    } 
+    
 }

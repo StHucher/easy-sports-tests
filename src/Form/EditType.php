@@ -78,12 +78,14 @@ class EditType extends AbstractType
         ->add('club', EntityType::class,[
             'class' => Club::class,
             'label'=> 'Ton club',
+            'placeholder'=>'Choisis ton club',
             'choice_label' => function($club){
                 return $club->getName();
             },
 
             'multiple' => false,
-            'expanded' => true,
+            'expanded' => false,
+            'required' => false
         ])
     ;
     }
