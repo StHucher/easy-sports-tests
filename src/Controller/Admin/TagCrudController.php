@@ -20,8 +20,8 @@ class TagCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnIndex()->hideOnForm(),
-            TextField::new('name'),
-            BooleanField::new('isPrimary')
+            TextField::new('name', 'Nom du Tag'),
+            BooleanField::new('isPrimary', 'Tag Primaire ?')
         ];
     }
 

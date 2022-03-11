@@ -23,11 +23,11 @@ class TestCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
-            TextField::new('name'),
+            IdField::new('id')->onlyOnDetail(),
+            TextField::new('name', 'Nom'),
             TextEditorField::new('description'),
             ImageField::new('media')->hideOnIndex()->setUploadDir('public/uploads/images/tests'),
-            TextField::new('unit'),
+            TextField::new('unit', 'Unité du test'),
             TextField::new('slug')->hideOnIndex()->hideOnForm(),
             AssociationField::new(('tags'))
         ];
