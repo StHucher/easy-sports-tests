@@ -96,9 +96,36 @@
                                             {# Tu ne peux supprimer un joueur que si tu es entraineur de cette équipe #}
                                             {% if team.role == 1 %}
                                             <div class="text-center">
-                                                <form method="post" action="{{ path('app_team_delete_player_from_team', {'id': player.id}) }}" onsubmit="return confirm('Veux tu supprimer {{ player.user.firstname }} {{ player.user.lastname }} de cette équipe ?');">
+
+
+
+
+                                                <form method="post" action="{{ path('app_team_delete_player_from_team', {'id': player.id}) }}">
                                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ player.id) }}">
-                                                    <button class="btn"><img src="{{ asset('assets/icones/trash_bin_icon-icons.com_67981.svg') }}" style="width:1.7rem" alt="image de poubelle"></button>
+                                                    {# <button class="btn"><img src="{{ asset('assets/icones/trash_bin_icon-icons.com_67981.svg') }}" style="width:1.7rem" alt="image de poubelle"></button> #}
+                                                <button type="button" class="btn {# btn-danger #}" data-bs-toggle="modal" data-bs-target="#exampleModal{{~player.id}}">
+                                                    <img src="{{ asset('assets/icones/trash_bin_icon-icons.com_67981.svg') }}" style="width:1.7rem" alt="image de poubelle">
+                                                </button>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal{{~player.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Suppression de joueur</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Es tu sûre de vouloir supprimer {{ player.user.firstname }} {{ player.user.lastname }} de cette équipe ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Fermer</button>
+                                                            <button type="submit" class="btn btn-danger">Oui</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>                                             
+
+                                                
                                                 </form>                     
                                             </div>
                                             {% endif %} 
@@ -115,5 +142,6 @@
                 {% set numberoOfTeam = numberoOfTeam + 1 %} 
         {% endfor %}
     {% endif %}
+
 </div>
 {% endblock %}
