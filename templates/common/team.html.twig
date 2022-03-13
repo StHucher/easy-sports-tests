@@ -56,7 +56,7 @@
                         {# S'il n'y a pas que l'entraineur dans cette équipe alors on peut faire passer un test #}
                         {% if teamPlayersListByTeam[numberOfTheTeam] | length > 1 %}
                         
-                            <a href="{{ path('test_team', {id : team.team.id})}}" class="btn-1 mx-2 mt-3 btntest" role="button"><span class="px-2">Testez cette Equipe</span></a>
+                            <a href="" class="btn-1 mx-2 mt-3 btntest" role="button"><span class="px-2">Tester cette Equipe</span></a>
                             <a href="{{ asset('coach/activity/new/'~team.team.id) }}" class="btn-1 mx-2 mt-3 btntest" role="button"><span class="px-2">Ajouter un joueur</span></a>
                              
                         {# Sinon il faut ajouter des joueurs #}      
