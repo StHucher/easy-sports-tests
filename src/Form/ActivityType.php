@@ -21,7 +21,7 @@ class ActivityType extends AbstractType
                 'class' => User::class,
                 'choice_label' => function($user){
                     return $user->getFirstname().' '.$user->getLastname();
-                }
+                },    
             ])
 
 /*             ->add('team', EntityType::class, [
