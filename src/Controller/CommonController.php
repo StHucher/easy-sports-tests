@@ -102,9 +102,9 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function testPhysique(TagTestRepository $tagTestRepo) : Response
+    public function testPhysique(TagRepository $tag) : Response
     {
-        return $this->render('common/physical_tests.html.twig',['tagTests'=> $tagTestRepo->findAll()]);
+        return $this->render('common/physical_tests.html.twig',['tags'=>$tag->findAll()]);
     }
 
     /**
@@ -112,10 +112,10 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function testTechnique(TagTestRepository $tagTestRepo) : Response
+    public function testTechnique(TagRepository $tag) : Response
     {   
         
-        return $this->render('common/technical_tests.html.twig',['tagTests'=> $tagTestRepo->findAll()]);
+        return $this->render('common/technical_tests.html.twig',['tags'=>$tag->findAll()]);
     }
 
     
