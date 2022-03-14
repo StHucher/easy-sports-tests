@@ -30,7 +30,7 @@ const test = {
             for(let d in data){
                 nameTest.textContent = 'Test : '+data[d].name+' (en '+ data[d].unit+')'
                 descriptionTest.textContent = data[d].description
-                videoTest.src= ''
+                videoTest.src = ''
                 imgTest.src=''
                 if(!videoTest.classList.contains('d-none')){
                     videoTest.classList.add('d-none');
@@ -40,7 +40,7 @@ const test = {
                         videoTest.classList.remove('d-none')
                         videoTest.src = data[d].media
                     }else{
-                        imgTest.src =data[d].media
+                        imgTest.src = '' + data[d].media
                     }
                     
                 }
