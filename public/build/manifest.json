@@ -1,11 +1,11 @@
 {
-  "build/app.css": "/build/app.css",
-  "build/app.js": "/build/app.js",
-  "build/userTeam.js": "/build/userTeam.js",
-  "build/test.js": "/build/test.js",
-  "build/runtime.js": "/build/runtime.js",
-  "build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_array--7349ad.js": "/build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_array--7349ad.js",
-  "build/vendors-node_modules_hotwired_stimulus_dist_stimulus_js-node_modules_core-js_modules_es_symbo-a6a1b1.js": "/build/vendors-node_modules_hotwired_stimulus_dist_stimulus_js-node_modules_core-js_modules_es_symbo-a6a1b1.js",
-  "build/vendors-node_modules_core-js_modules_es_function_name_js-node_modules_core-js_modules_es_promise_js.js": "/build/vendors-node_modules_core-js_modules_es_function_name_js-node_modules_core-js_modules_es_promise_js.js",
-  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-chartjs_di-9041ec.js": "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-chartjs_di-9041ec.js"
+  "build/app.css": "/build/app.73f5a990.css",
+  "build/app.js": "/build/app.c811eb26.js",
+  "build/userTeam.js": "/build/userTeam.177149a1.js",
+  "build/test.js": "/build/test.d8003f25.js",
+  "build/runtime.js": "/build/runtime.61b1725c.js",
+  "build/963.281b7428.js": "/build/963.281b7428.js",
+  "build/184.eef05204.js": "/build/184.eef05204.js",
+  "build/845.b28451e4.js": "/build/845.b28451e4.js",
+  "build/481.21ec02bb.js": "/build/481.21ec02bb.js"
 }
