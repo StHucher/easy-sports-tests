@@ -67,7 +67,7 @@ class EditType extends AbstractType
                     ],
                     'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou png',
                 ])
-            ],*/
+            ], */
             'data_class' => null,
 
         ])
