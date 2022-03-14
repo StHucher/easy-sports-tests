@@ -48,19 +48,13 @@ class TeamRepository extends ServiceEntityRepository
     public function createTeamFromUserQueryBuilder($user)
     {   
         $id =$user->getId();
-        // $teamActivities = $user->getActivities();
-        // $teamId = [];
-        // foreach($teamActivities as $activity){
-        //     $team = $activity->getTeam()->getId();
-        //     $teamId [] = $team;
-
-        // }
-        // foreach ($teamId as $id) {
+        
             return $this->createQueryBuilder('t')
             ->select('t')
             ->innerJoin('App\Entity\Activity', 'activity', 'WITH', 't.id = activity.team')
             ->innerJoin('App\Entity\User', 'user', 'WITH', 'activity.user = user.id')
-            ->where('user.id ='.$id);
+            ->where('user.id ='.$id)
+            ->andWhere('activity.role = 1');
         // }
     }
 

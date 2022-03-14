@@ -125,7 +125,7 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function registerTest(UserRepository $user ,SessionInterface $session,TeamRepository $team,Request $request, Test $test, UserInterface $userInterface, ActivityRepository $activityRepository,EntityManagerInterface $manager) : Response
+    public function registerTest(Request $request, Test $test, UserInterface $userInterface, EntityManagerInterface $manager) : Response
     {       
         $result = new Result();
         $form = $this->createForm(ResultType::class, $result);
@@ -134,7 +134,9 @@ class CommonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $result->setTest($test);
             $result->setDoneAt( new DateTime('now'));
-            if(in_array("ROLE_COACH",$userInterface->getRoles())){
+            $post = $request->get('result');
+            $userFromRequest = $post['user'];
+            if(in_array("ROLE_COACH",$userInterface->getRoles()) && $userFromRequest != $userInterface->getId()){
                 $result->setStatus(1);
             }else{
                 $result->setStatus(0);
@@ -156,7 +158,7 @@ class CommonController extends AbstractController
      *
      * @Route("/{slug}/profil", name="profilpage", methods = {"GET", "POST"})
      */
-    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, SluggerInterface $slugger, UserInterface $userInterface): Response
+    public function editUser(Request $request, EntityManagerInterface $entityManager, User $user, UserInterface $userInterface): Response
     {
         $user = $this->getUser();
 
@@ -197,11 +199,12 @@ class CommonController extends AbstractController
                         return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER); 
                     }
 
-                $user->setPicture($newFilename);        
-               
+                $user->setPicture($newFilename);
+            
+                /* $entityManager->persist($user); */
+                
                     
             }
-             /* $entityManager->persist($user); */
             $entityManager->flush();
             $this->addFlash('success', 'Votre compte a été modifié avec succès.');
             return $this->redirectToRoute('user_home', ['slug'=>$userInterface->getSlug()], Response::HTTP_SEE_OTHER); 
@@ -328,7 +331,7 @@ class CommonController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return void
      */
-    public function ResultCurrentUser(User $user,Request $request, UserInterface $userInterface, EntityManagerInterface $manager)
+    public function ResultCurrentUser(User $user,Request $request, UserInterface $userInterface, EntityManagerInterface $manager, SessionInterface $session)
     {
         $result = new Result();
         $form = $this->createForm(ResultCurrentUserType::class, $result);
@@ -336,8 +339,10 @@ class CommonController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $result->setDoneAt( new DateTime('now'));
+            $post = $request->get('result_current_user');
+            $test = $post['test'];
             $result->setUser($user);
-            if(in_array("ROLE_COACH",$userInterface->getRoles())){
+            if(in_array("ROLE_COACH",$userInterface->getRoles()) && $userInterface->getId()!= $user->getId()){
                 $result->setStatus(1);
             }else{
                 $result->setStatus(0);
@@ -346,7 +351,7 @@ class CommonController extends AbstractController
             $manager->persist($result);
             $manager->flush();
 
-            return $this->redirectToRoute('history',['slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_chart',['id'=> $test], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('common/currentUserTest.html.twig', [
             'form' => $form,
