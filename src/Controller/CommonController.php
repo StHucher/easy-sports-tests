@@ -351,7 +351,7 @@ class CommonController extends AbstractController
             $manager->persist($result);
             $manager->flush();
 
-            return $this->redirectToRoute('app_chart',['id'=> $test], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_chart',['id'=> $test,'slug'=> $user->getSlug()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('common/currentUserTest.html.twig', [
             'form' => $form,

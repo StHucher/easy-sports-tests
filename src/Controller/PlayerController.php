@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ResultRepository;
 use App\Repository\TestRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,17 +26,23 @@ class PlayerController extends AbstractController
     }
 
     /**
-     * @Route("/chart/{id}", name="app_chart")
+     * @Route("{slug}/chart/{id}", name="app_chart")
      */
-    public function chart(ChartBuilderInterface $chartBuilder, Security $security, $id, ResultRepository $resultRepository, TestRepository $testRepository): Response
+    public function chart(ChartBuilderInterface $chartBuilder, Security $security, $id, UserRepository $userRepository, ResultRepository $resultRepository, TestRepository $testRepository, $slug): Response
     {
         //id du test
         $testId = $id;
         // récupère le test pour le name par exemple, description, photo etc
+        if($slug != null){
+            $userSlug = $slug;
+            $user = $userRepository->findBy(['slug'=>$userSlug]);
+        }else{
+            $user = $security->getUser();
+        }
+        
         $test = $testRepository->find($id);
         //user courant
-        $user = $security->getUser();
-        
+        // $user = $security->getUser();
         $myResults = $resultRepository->findBy([
             'test'=>$testId,
             'user' => $user,
