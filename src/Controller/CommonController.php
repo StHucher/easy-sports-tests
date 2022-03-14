@@ -331,13 +331,21 @@ class CommonController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return void
      */
-    public function ResultCurrentUser(User $user,Request $request, UserInterface $userInterface, EntityManagerInterface $manager, SessionInterface $session)
+    public function ResultCurrentUser(User $user,Request $request, UserInterface $userInterface, EntityManagerInterface $manager, SessionInterface $session, $id)
     {
         $result = new Result();
         $form = $this->createForm(ResultCurrentUserType::class, $result);
-        
+       
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // si je ne suis pas coach et que je suis pas le user courant 
+            // j'ai pas le droitd'envoyer un résultat pour un autre joueur
+            if ( (!in_array("ROLE_COACH",$userInterface->getRoles())) && ($userInterface->getId() != $id )) {
+                return $this->render('bundles/TwigBundle/Exception/error403.html.twig');
+            }
+
+
             $result->setDoneAt( new DateTime('now'));
             $post = $request->get('result_current_user');
             $test = $post['test'];
