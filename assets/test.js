@@ -38,9 +38,9 @@ const test = {
                 if(data[d].media != null){
                     if(data[d].media.endsWith('mp4')){
                         videoTest.classList.remove('d-none')
-                        videoTest.src = data[d].media
+                        videoTest.src = '../uploads/images/tests/' + data[d].media
                     }else{
-                        imgTest.src = '' + data[d].media
+                        imgTest.src = '../uploads/images/tests/' + data[d].media
                     }
                     
                 }
