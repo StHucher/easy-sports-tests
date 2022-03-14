@@ -41,7 +41,7 @@
                             <h3 class="heading">Test : {{result.test.name}}<br>Résultat : {{result.result}} {{result.test.unit}}</h3>
                             <div class="mt-5">
                                 
-                                <div class="mt-3"><a href="{{path('app_chart', {id : result.test.id})}}">Voir mon évolution</a></div>
+                                <div class="mt-3"><a href="{{path('app_chart', {id : result.test.id ,slug : user.slug})}}">Voir mon évolution</a></div>
                             </div>
                         </div>
                     </div>
