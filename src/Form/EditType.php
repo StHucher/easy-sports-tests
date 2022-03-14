@@ -58,7 +58,7 @@ class EditType extends AbstractType
             'label' => 'Ton avatar ou photo (jpg, png)',
             'mapped' => false,
             'required' => false,
-            /* 'constraints' => [
+            /*'constraints' => [
                 new File([
                     'maxSize' => '1024k',
                     'mimeTypes' => [
@@ -67,7 +67,7 @@ class EditType extends AbstractType
                     ],
                     'mimeTypesMessage' => 'Merci d\'insérer un fichier jpg ou png',
                 ])
-            ], */
+            ],*/
             'data_class' => null,
 
         ])
@@ -78,12 +78,14 @@ class EditType extends AbstractType
         ->add('club', EntityType::class,[
             'class' => Club::class,
             'label'=> 'Ton club',
+            'placeholder'=>'Choisis ton club',
             'choice_label' => function($club){
                 return $club->getName();
             },
 
             'multiple' => false,
-            'expanded' => true,
+            'expanded' => false,
+            'required' => false
         ])
     ;
     }

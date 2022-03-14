@@ -33,7 +33,7 @@
 {# header de l'utilisateur connecté#}
     {% if app.user %}
      <div class="px-4 py-5 mb-2 text-center bg-header" style="background-image: url('https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');">
-    <h1 class="title text-center">Easy-Sports-Tests</h1>
+      <h1 class="title text-center">Easy-Sports-Tests</h1>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,24 +66,20 @@
                     <a class="nav-link text-light" href="{{path('coach_teams', {id : app.user.id})}}">Mon équipe</a>
                   </li>
                   <li class="nav-item">
-
-
-
                     <a class="nav-link text-light" href="{{ path('app_logout') }}">Se déconnecter</a>
-
                   </li>
                 </ul>
               </div>
             </div>
           </nav> 
-  </div> 
+    </div> 
     {# header de la homepage utilisateur non connecté #}
    {% else %}
-  <div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-center" style="background-image: url('https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"> 
-    <div class="container">
+  <div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-center" style="background-image: url('https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');"  > 
+    <div class="container ">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">EASY-SPORTS-TESTS</a>
+              <a class="navbar-brand" href="{{ path('homepage') }}">EASY-SPORTS-TESTS</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -107,19 +103,21 @@
         </nav>
     </div>
         {% endif %}
+        <div class = "containerbase">
         {% block body %}{% endblock %}
+        </div>
         <div class="container">
             <footer class="d-flex flex-wrap  align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
+            <p class="col-md-4 mb-0 text-light">&copy; 2022 Company, Inc</p>
 
         <!-- <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
             </a> -->           
 
             <ul class="nav col-md-4 justify-content-between">
-                <li class="nav-item"><a href="{{ path('contactpage') }}" class="nav-link px-2 text-muted">Contact</a></li>
-                <li class="nav-item"><a href="{{ path('legalnotice') }}" class="nav-link px-2 text-muted">Mentions Légales</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Autre</a></li>
+                <li class="nav-item"><a href="{{ path('contactpage') }}" class="nav-link px-2 text-light">Contact</a></li>
+                <li class="nav-item"><a href="{{ path('legalnotice') }}" class="nav-link px-2 text-light">Mentions Légales</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Autre</a></li>
 
             </ul>
             </footer>
