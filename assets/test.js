@@ -40,7 +40,7 @@ const test = {
                         videoTest.classList.remove('d-none')
                         videoTest.src = data[d].media
                     }else{
-                        imgTest.src = '' + data[d].media
+                        imgTest.src = '../uploads/images/tests/' + data[d].media
                     }
                     
                 }
