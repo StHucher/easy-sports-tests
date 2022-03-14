@@ -8,6 +8,10 @@ body {
     background-size: cover;
 }
 
+.form{
+    background-color: #3f9e55;
+}
+
 .navbar-nav > li{
     padding-left:60px;
     padding-right:60px;
@@ -42,10 +46,11 @@ body {
     background: rgb(0, 0, 0); 
     background: rgba(0, 0, 0, 0.3); 
     color: #f1f1f1; /* Grey text */
-    width: 80%; /* Full width */
-    padding: 20px; /* Some padding */
+    /* width: 90%; */ /* Full width */
+    padding: 15px; /* Some padding */
     z-index: 0;
     margin-top: 4rem;
+    text-align: center;
 }
 
 /******Page home_player******/
@@ -260,9 +265,9 @@ body {
 @media screen and (max-width:767px)
 {
    
-    img{
+    /* img{
         display:none;
-    }
+    } */
 }
 
 /*breakpoint to improve the 2nd row's layout*/

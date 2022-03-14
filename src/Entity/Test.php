@@ -35,6 +35,11 @@ class Test
     private $description;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $instructions;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"show_test"})
      */
@@ -57,14 +62,16 @@ class Test
     private $results;
 
     /**
-     * @ORM\OneToMany(targetEntity=TagTest::class, mappedBy="test")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="tests")
      */
-    private $tagTests;
+    private $tags;
+
 
     public function __construct()
     {
         $this->results = new ArrayCollection();
-        $this->tagTests = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -92,6 +99,18 @@ class Test
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getInstructions(): ?string
+    {
+        return $this->instructions;
+    }
+
+    public function setInstructions(?string $instructions): self
+    {
+        $this->instructions = $instructions;
 
         return $this;
     }
@@ -163,32 +182,27 @@ class Test
     }
 
     /**
-     * @return Collection<int, TagTest>
+     * @return Collection<int, Tag>
      */
-    public function getTagTests(): Collection
+    public function getTags(): Collection
     {
-        return $this->tagTests;
+        return $this->tags;
     }
 
-    public function addTagTest(TagTest $tagTest): self
+    public function addTag(Tag $tag): self
     {
-        if (!$this->tagTests->contains($tagTest)) {
-            $this->tagTests[] = $tagTest;
-            $tagTest->setTest($this);
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
         }
 
         return $this;
     }
 
-    public function removeTagTest(TagTest $tagTest): self
+    public function removeTag(Tag $tag): self
     {
-        if ($this->tagTests->removeElement($tagTest)) {
-            // set the owning side to null (unless already changed)
-            if ($tagTest->getTest() === $this) {
-                $tagTest->setTest(null);
-            }
-        }
+        $this->tags->removeElement($tag);
 
         return $this;
     }
+
 }

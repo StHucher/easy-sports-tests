@@ -24,19 +24,31 @@ class Tag
      */
     private $name;
 
+
     /**
-     * @ORM\OneToMany(targetEntity=TagTest::class, mappedBy="tag")
+     * @ORM\Column(type="boolean")
      */
-    private $tagTests;
+    private $isPrimary;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Test::class, mappedBy="tags")
+     */
+    private $tests;
 
     public function __construct()
     {
         $this->tagTests = new ArrayCollection();
+        $this->tests = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getName(): ?string
@@ -51,31 +63,40 @@ class Tag
         return $this;
     }
 
-    /**
-     * @return Collection<int, TagTest>
-     */
-    public function getTagTests(): Collection
+    public function getIsPrimary(): ?bool
     {
-        return $this->tagTests;
+        return $this->isPrimary;
     }
 
-    public function addTagTest(TagTest $tagTest): self
+    public function setIsPrimary(bool $isPrimary): self
     {
-        if (!$this->tagTests->contains($tagTest)) {
-            $this->tagTests[] = $tagTest;
-            $tagTest->setTag($this);
+        $this->isPrimary = $isPrimary;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Test>
+     */
+    public function getTests(): Collection
+    {
+        return $this->tests;
+    }
+
+    public function addTest(Test $test): self
+    {
+        if (!$this->tests->contains($test)) {
+            $this->tests[] = $test;
+            $test->addTag($this);
         }
 
         return $this;
     }
 
-    public function removeTagTest(TagTest $tagTest): self
+    public function removeTest(Test $test): self
     {
-        if ($this->tagTests->removeElement($tagTest)) {
-            // set the owning side to null (unless already changed)
-            if ($tagTest->getTag() === $this) {
-                $tagTest->setTag(null);
-            }
+        if ($this->tests->removeElement($test)) {
+            $test->removeTag($this);
         }
 
         return $this;
