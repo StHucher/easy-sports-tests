@@ -11,21 +11,19 @@
     <h1 class="title-page name_test"></h1><span id="unit_test"></span>
 
     <div class="row">
-        <div class="col-12 col-md-8">
-           
-                <p id="description_test"></p>
-                {{ form_start(form) }}
-                {{ form_row(form.test) }}    
-                {{ form_row(form.result) }} 
-                <button class="btn">{{ button_label|default('Save') }}</button>
-                {{ form_end(form) }} 
+        <div class="col-12 col-md-7">
+            <p id="description_test"></p>
+            {{ form_start(form) }}
+            {{ form_row(form.test) }}    
+            {{ form_row(form.result) }} 
+            <button class="btn">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }} 
         </div>
-        <div class="p-5 col-12 col-md-4 ">
-                <img width="100%" id="test_img" >
-                <video class="d-none"id="test_video" width="100%"  controls>
-                    <source  type="video/mp4">
-                </video>
-            
+        <div class="p-5 col-12 col-md-5 ">
+            <img width="100%" id="test_img" >
+            <video class="d-none"id="test_video" width="100%"  controls>
+                <source  type="video/mp4">
+            </video>
         </div>
     </div>
           
