@@ -44,7 +44,7 @@
                 <tr>
                 <th scope="col">Résultats</th>
                 <th scope="col">Date</th>
-                <th scope="col">Off./Ent.</th>
+                <th scope="col">Off./Perso.</th>
         
                 </tr>
             </thead>
@@ -54,7 +54,7 @@
                 <tr>
                     <td>{{ result.result }}</td> 
                     <td>{{ result.doneAt | date('d-m-Y') }}</td> 
-                    <td>{{ result.status == 1 ? "Officiel" : "Entrainement" }}</td> 
+                    <td>{{ result.status == 1 ? "Officiel" : "Personnel" }}</td> 
                 
                 </tr>
 

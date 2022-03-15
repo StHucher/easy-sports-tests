@@ -225,13 +225,15 @@ body {
     background-color: #fffbec;
     width: 60px;
     height: 25px;
-    padding-bottom: 3px;
+ 
     border-radius: 5px;
     display: flex;
-    color: #fed85d;
+    color: #fff;
     justify-content: center;
     align-items: center;
     margin-bottom:1em;
+    padding: 1em; 
+    /* font-size: ; */
 }
 
 .progress {
