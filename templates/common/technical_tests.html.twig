@@ -11,15 +11,11 @@
         <h2>Tests Techniques</h2>
                 
     </div>
-
-
-
-
     <div class="row text-center mt-5">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            {% for tag in tags %}
-                <button class="nav-link text-secondary" id="nav-{{tag.name}}-tab" data-bs-toggle="tab" data-bs-target="#nav-{{tag.name}}" type="button" role="tab" aria-controls="nav-{{tag.name}}">{{tag.name}}</button>
+            {% for tag in listTag %}
+                <button class="nav-link text-secondary" id="nav-{{tag}}-tab" data-bs-toggle="tab" data-bs-target="#nav-{{tag}}" type="button" role="tab" aria-controls="nav-{{tag}}">{{tag}}</button>
             {% endfor %}
             </div>
         </nav>

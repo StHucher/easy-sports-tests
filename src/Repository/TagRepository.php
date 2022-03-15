@@ -73,4 +73,46 @@ class TagRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function allTestForPrimaryTag($primaryTag) {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        // une requete qui renvoit un title / slug aléatoire
+        $sql = '
+            SELECT test_tag.test_id 
+            FROM tag 
+            INNER JOIN test_tag
+            ON tag.id = test_tag.tag_id
+            where tag.name = "' . $primaryTag .'"';
+
+        // exécution de la requete
+        $results = $conn->executeQuery($sql);
+
+        // returns an array (i.e. a raw data set)
+        return $results->fetchAllAssociative();
+    }
+
+
+    public function allTagForPrimaryTag($primaryTag, $testId) {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        // une requete qui renvoit un title / slug aléatoire
+        $sql = '
+                SELECT *
+                FROM tag
+                INNER JOIN test_tag
+                ON tag.id = test_tag.tag_id
+                WHERE test_tag.test_id = "' . $testId .'" AND  tag.name != "' . $primaryTag .'"';
+
+        // exécution de la requete
+        $results = $conn->executeQuery($sql);
+
+        // returns an array (i.e. a raw data set)
+        return $results->fetchAllAssociative();
+    }
+
+
+
 }

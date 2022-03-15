@@ -102,9 +102,32 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function testPhysique(TagRepository $tag) : Response
+    public function testPhysique(TagRepository $tagRepository) : Response
     {
-        return $this->render('common/physical_tests.html.twig',['tags'=>$tag->findAll()]);
+
+
+        $allTestByTag = $tagRepository->allTestForPrimaryTag("Physique");
+        
+        $tabAllTags = [];
+        foreach ($allTestByTag as $allTag) {
+            foreach ($allTag as $tags) {                
+                $tabAllTags [] = $tagRepository->allTagForPrimaryTag("Physique", $tags); 
+            }
+        }
+        
+        $tabTags = [];
+        foreach ($tabAllTags as $tags) {
+            foreach ($tags as $tag) {
+                $tabTags [] =($tag['name']);
+            }
+        }
+
+       $ListTag = array_unique($tabTags);
+
+        return $this->render('common/physical_tests.html.twig',[
+            'tags'=>$tagRepository->findAll(),
+             'listTag' => $ListTag 
+            ]);
     }
 
     /**
@@ -112,10 +135,30 @@ class CommonController extends AbstractController
      *
      * @return Response
      */
-    public function testTechnique(TagRepository $tag) : Response
+    public function testTechnique(TagRepository $tagRepository) : Response
     {   
+        $allTestByTag = $tagRepository->allTestForPrimaryTag("Technique");
+        //$tag->allTagForPrimaryTag("Technique", $tag);  
+
+        $tabAllTags = [];
+        foreach ($allTestByTag as $allTag) {
+            foreach ($allTag as $tags) {                
+                $tabAllTags [] = $tagRepository->allTagForPrimaryTag("Technique", $tags); 
+            }
+        }
         
-        return $this->render('common/technical_tests.html.twig',['tags'=>$tag->findAll()]);
+        $tabTags = [];
+        foreach ($tabAllTags as $tags) {
+            foreach ($tags as $tag) {
+                $tabTags [] =($tag['name']);
+            }
+        }
+
+        $ListTag = array_unique($tabTags);
+      
+        return $this->render('common/technical_tests.html.twig',[
+                        'tags'=>$tagRepository->findAll(),
+                        "listTag" => $ListTag ]);
     }
 
     
