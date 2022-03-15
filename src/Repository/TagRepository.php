@@ -111,8 +111,7 @@ class TagRepository extends ServiceEntityRepository
 
         // returns an array (i.e. a raw data set)
         return $results->fetchAllAssociative();
+
     }
-
-
 
 }

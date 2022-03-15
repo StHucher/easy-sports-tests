@@ -105,7 +105,6 @@ class CommonController extends AbstractController
     public function testPhysique(TagRepository $tagRepository) : Response
     {
 
-
         $allTestByTag = $tagRepository->allTestForPrimaryTag("Physique");
         
         $tabAllTags = [];
