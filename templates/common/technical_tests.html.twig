@@ -40,7 +40,7 @@
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="my-3 mx-auto card vignette-card-dimension resultblock">
                             <a href="{{path('one_test', {id : test.id})}}">
-                                <div class="vignette-tests  bg-image-tests " style="background-image: url('./assets/img/jongles.jpg')">        
+                                <div class="vignette-tests  bg-image-tests " style="background-image: url('{{asset('uploads/images/users/' ~ test.media)}}')">        
                                     <div class="card-body image-tests" >
                                         <h5 class="card-title image-tests-common image-tests-header">{{test.name}}</h5>
 
