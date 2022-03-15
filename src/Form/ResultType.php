@@ -28,12 +28,13 @@ class ResultType extends AbstractType
         $builder
         ->add('team', EntityType::class,[
             'class'=>Team::class,
-            'choice_label' => 'name',
+            'choice_label' => 'nameAgeCategory',
             'label' => 'Equipe',
             'mapped' => false,
             'placeholder' => 'Choisissez une équipe',
             'query_builder' => function (TeamRepository $teamRepository) use ($user) {
-                return $teamRepository->createTeamFromUserQueryBuilder($user);
+                $team = $teamRepository->createTeamFromUserQueryBuilder($user);
+                return $team ;
             }
         ])
         ->add('user', EntityType::class,[

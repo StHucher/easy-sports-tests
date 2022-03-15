@@ -150,4 +150,8 @@ class Team
 
         return $this;
     }
+
+    public function getNameAgeCategory () {
+       return $this->name . ' - ' . $this->ageCategory;
+    }
 }

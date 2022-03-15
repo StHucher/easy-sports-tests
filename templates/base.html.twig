@@ -19,16 +19,6 @@
     </head>
     <body>
 
-        {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
-        {% endfor %}
-        {% for message in app.flashes('error') %}
-                <div class="alert alert-error">
-                    {{ message }}
-                </div>
-        {% endfor %}
 
         {# Définition de la route courante #}
         {% set route_name = app.request.attributes.get('_route') %}
@@ -107,6 +97,18 @@
                  </div>
             
         {% endif %}
+
+
+        {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+                <div class="alert alert-error">
+                    {{ message }}
+                </div>
+        {% endfor %}
   
         <div class = "containerbase">
             {% block body %}{% endblock %}
