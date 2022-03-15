@@ -104,7 +104,19 @@ class CommonController extends AbstractController
      */
     public function testPhysique(TagRepository $tag) : Response
     {
-        return $this->render('common/physical_tests.html.twig',['tags'=>$tag->findAll()]);
+
+        $technicalTests = $tag->allTestForPrimaryTag("Technique");
+
+        dd($technicalTests);
+
+
+
+
+
+        return $this->render('common/physical_tests.html.twig',[
+            'tags'=>$tag->findAll(),
+            'technicalTests' => $technicalTests
+        ]);
     }
 
     /**

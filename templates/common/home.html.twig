@@ -110,7 +110,7 @@
                     <h5 class="card-title"><a href="{{ path('history', {slug: user.slug}) }}">Mes Résultats</a></h5>
                     <ul class="list-group list-group-flush">
                     {% for result in user.results [-3:] %}
-                      <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}} <div class="badge">{% if result.status == 1 %} <span>Officiel</span> {% else %} <span>Personnel</span> {% endif %}</div></li>
+                      <li class="list-group-item">{{result.test.name}} : {{result.result}} {{result.test.unit}} <div>{% if result.status == 1 %} <span class="badge bg-success">Officiel</span> {% else %} <span class="badge bg-danger">Personnel</span> {% endif %}</div></li>
                       {% endfor %}
                       
                     </ul>
